@@ -1,0 +1,20 @@
+ruby "3.3.4"
+
+source "https://rubygems.org"
+
+gem "activerecord", "~> 8.0.1"
+gem "pg", "~> 1.5"
+gem "puma", "~> 6.4"
+gem "rackup", "~> 2.1"
+gem "rake", "~> 13.2"
+gem "sinatra"
+gem "sinatra-activerecord", "~> 2.0.28"
+gem "zeitwerk", "~> 2.7.2"
+
+group :test do
+  gem "database_cleaner"
+  gem "rack-test", "~> 2.2.0"
+  gem "rspec"
+  gem "rubocop-govuk", "~> 5.0", require: false
+  gem "rubocop-performance", "~> 1.21", require: false
+end
