@@ -2,7 +2,7 @@ ENV["STAGE"] = "test"
 
 require "rake"
 require "zeitwerk"
-require 'active_record'
+require "active_record"
 
 class TestLoader
   def self.setup
