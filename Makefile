@@ -13,3 +13,16 @@ format:
 test:
 	@STAGE=test bundle exec rspec
 
+.PHONY: setup-db
+setup-db:
+	@echo ">>>>> Creating DB"
+	@bundle exec rake db:create RACK_ENV=development
+	@bundle exec rake db:create RACK_ENV=test
+	@echo ">>>>> Migrating DB"
+	@bundle exec rake db:migrate RACK_ENV=development
+	@bundle exec rake db:migrate RACK_ENV=test
+
+drop-db:
+	@echo ">>>>> Dropping db"
+	@bundle exec rake db:drop RACK_ENV=development
+	@bundle exec rake db:drop RACK_ENV=test
