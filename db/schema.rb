@@ -10,21 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_03_093423) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_08_153739) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
-  create_table "addresses", force: :cascade do |t|
-    t.string "uprn"
-    t.string "organisation_name"
-    t.string "po_box_number"
-    t.string "sub_name"
+  create_table "addresses", primary_key: "uprn", id: :string, force: :cascade do |t|
+    t.string "parentuprn"
+    t.string "organisationname"
+    t.string "poboxnumber"
+    t.string "subname"
     t.string "name"
     t.string "number"
-    t.string "street_name"
+    t.string "streetname"
     t.string "locality"
-    t.string "town_name"
+    t.string "townname"
     t.string "postcode"
-    t.string "full_address"
+    t.string "fulladdress"
+    t.string "country"
+    t.string "classificationcode"
+  end
+
+  create_table "addresses_temp", primary_key: "uprn", id: :string, force: :cascade do |t|
+    t.string "parentuprn"
+    t.string "organisationname"
+    t.string "poboxnumber"
+    t.string "subname"
+    t.string "name"
+    t.string "number"
+    t.string "streetname"
+    t.string "locality"
+    t.string "townname"
+    t.string "postcode"
+    t.string "fulladdress"
+    t.string "country"
+    t.string "classificationcode"
   end
 end

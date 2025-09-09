@@ -1,6 +1,8 @@
 development:
   adapter: postgresql
   database: epb-addressing
+  username: postgres
 test:
   adapter: postgresql
   database: epb-addressing-test
+  username: postgres
