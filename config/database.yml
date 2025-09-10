@@ -6,3 +6,8 @@ test:
   adapter: postgresql
   database: epb-addressing-test
   username: postgres
+integration:
+  adapter: postgresql
+  database: epb
+  pool: 62
+  url: <%= ENV['DATABASE_URL'] %>

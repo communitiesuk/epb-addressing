@@ -1,0 +1,12 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      ruby: 3.1
+      nodejs: 20
+    commands:
+      - bundle install
+  build:
+    commands:
+      - make test
