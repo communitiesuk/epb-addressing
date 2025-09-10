@@ -1,8 +1,10 @@
 ENV["STAGE"] = "test"
+ENV["RACK_ENV"] = "test"
 
 require "rake"
 require "zeitwerk"
 require "active_record"
+require "rack/test"
 
 class TestLoader
   def self.setup
@@ -13,6 +15,14 @@ class TestLoader
 
   def self.override(path)
     load path
+  end
+end
+
+module RSpecAddressingServiceMixin
+  include Rack::Test::Methods
+
+  def app
+    AddressingService
   end
 end
 

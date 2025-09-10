@@ -22,7 +22,12 @@ setup-db:
 	@bundle exec rake db:migrate RACK_ENV=development
 	@bundle exec rake db:migrate RACK_ENV=test
 
+.PHONY: drop-db
 drop-db:
 	@echo ">>>>> Dropping db"
 	@bundle exec rake db:drop RACK_ENV=development
 	@bundle exec rake db:drop RACK_ENV=test
+
+.PHONY: run
+run:
+	@STAGE=development bundle exec rackup -p 9191
