@@ -1,10 +1,10 @@
 development:
   adapter: postgresql
-  database: epb-addressing
+  database: epb_addressing
   username: postgres
 test:
   adapter: postgresql
-  database: epb-addressing-test
+  database: epb_addressing_test
   username: postgres
 integration:
   adapter: postgresql
