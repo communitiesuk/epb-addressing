@@ -2,8 +2,14 @@
 # Usage
 #
 # ./run_db_migrate_task.sh $CLIENT_ROLE_ARN client
+echo "DEBUG args: \$1=$1 \$2=$2 \$3=$3"
+
 PREFIX=$1
 PROFILE=$2
+
+echo "DEBUG before assign: PREFIX=$PREFIX"
+echo "DEBUG before assign: PROFILE=$PROFILE"
+
 VPC_NAME="${PREFIX}-vpc"
 SECURITY_GROUP_NAME="${PREFIX}-addressing-ecs-sg"
 CLUSTER_NAME="${PREFIX}-addressing-cluster"
