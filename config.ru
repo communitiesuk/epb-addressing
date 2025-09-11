@@ -7,9 +7,7 @@ loader = Zeitwerk::Loader.new
 loader.push_dir("#{__dir__}/lib/")
 loader.setup
 
-environment = ENV["STAGE"]
-
-ActiveRecord::Base.establish_connection(environment.to_sym)
+ActiveRecord::Base.establish_connection(ENV["DATABASE_URL"])
 ActiveSupport.to_time_preserves_timezone = :zone
 
 run AddressingService
