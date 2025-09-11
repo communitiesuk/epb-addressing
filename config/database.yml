@@ -6,6 +6,7 @@ test:
   adapter: postgresql
   database: epb_addressing_test
   username: postgres
+  password: <%= ENV['DOCKER_POSTGRES_PASSWORD'] %>
 integration:
   adapter: postgresql
   database: epb
