@@ -13,7 +13,7 @@ gem "sinatra-activerecord", "~> 2.0.28"
 gem "zeitwerk", "~> 2.7.2"
 
 group :test do
-  gem "database_cleaner"
+  gem "database_cleaner-active_record", "~> 2.1"
   gem "rack-test", "~> 2.2.0"
   gem "rspec"
   gem "rubocop-govuk", "~> 5.0", require: false

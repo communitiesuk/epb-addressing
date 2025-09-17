@@ -3,7 +3,6 @@ require "csv"
 shared_context "when accessing addresses table" do
   def import_sample_data
     conn = ActiveRecord::Base.connection
-    conn.exec_query("TRUNCATE TABLE addresses;")
 
     file_path = File.join Dir.pwd, "spec/fixtures/samples/add_gb_builtaddress.csv"
 
