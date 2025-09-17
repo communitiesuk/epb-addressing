@@ -3,6 +3,7 @@ ruby "3.3.4"
 source "https://rubygems.org"
 
 gem "activerecord", "~> 8.0.1"
+gem "csv", "~> 3.3"
 gem "pg", "~> 1.5"
 gem "puma", "~> 6.4"
 gem "rackup", "~> 2.1"
