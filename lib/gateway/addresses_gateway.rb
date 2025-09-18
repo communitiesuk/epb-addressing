@@ -24,7 +24,7 @@ module Gateway
         ),
       ]
 
-      ActiveRecord::Base.connection.exec_query(insert_sql, "SQL", bindings)
+      ActiveRecord::Base.connection.exec_query(insert_sql, "SQL", bindings).to_a
     end
 
     def search_by_postcode(postcode:)
@@ -45,7 +45,7 @@ module Gateway
         ),
       ]
 
-      ActiveRecord::Base.connection.exec_query(insert_sql, "SQL", bindings)
+      ActiveRecord::Base.connection.exec_query(insert_sql, "SQL", bindings).to_a
     end
   end
 end
