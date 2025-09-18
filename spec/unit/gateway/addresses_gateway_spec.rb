@@ -72,4 +72,24 @@ describe Gateway::AddressesGateway do
       expect(result.length).to eq 0
     end
   end
+
+  describe "#search_by_uprns" do
+    let(:uprns) { %w[10091906164 10094201178] }
+    let(:result) { gateway.search_by_uprns(uprns:) }
+
+    it "returns any matches" do
+      expect(result.length).to eq 2
+      expect(result.map { |row| row["uprn"] }.sort).to eq uprns
+    end
+
+    it "returns the correct values" do
+      expect(result.first.keys.sort).to eq %w[fulladdress parentuprn postcode uprn]
+    end
+
+    it "does not return any values for a missing uprn" do
+      missing_uprns = %w[1009000000]
+      result = gateway.search_by_uprns(uprns: missing_uprns)
+      expect(result.length).to eq 0
+    end
+  end
 end
