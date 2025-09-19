@@ -7,7 +7,7 @@ describe Helper::Results, type: :helper do
         [
           {
             "uprn" => "1000000001",
-            "parent_uprn" => "1000000002",
+            "parent_uprn" => "2000000002",
             "full_address" => "Some address with parent",
             "postcode" => "IP25 6RE",
           },
@@ -17,23 +17,7 @@ describe Helper::Results, type: :helper do
       let(:parents) do
         [
           {
-            "uprn" => "1000000002",
-            "parent_uprn" => "",
-            "full_address" => "Different address on the parent",
-            "postcode" => "IP25 6RE",
-          },
-        ]
-      end
-      let(:expected) do
-        [
-          {
-            "uprn" => "1000000001",
-            "parent_uprn" => "1000000002",
-            "full_address" => "Some address with parent",
-            "postcode" => "IP25 6RE",
-          },
-          {
-            "uprn" => "1000000002",
+            "uprn" => "2000000002",
             "parent_uprn" => "",
             "full_address" => "Different address on the parent",
             "postcode" => "IP25 6RE",
@@ -41,7 +25,25 @@ describe Helper::Results, type: :helper do
         ]
       end
 
-      it "merges the new parents in the results" do
+      let(:expected) do
+        [
+          {
+            "uprn" => "1000000001",
+            "parent_uprn" => "2000000002",
+            "full_address" => "Some address with parent",
+            "postcode" => "IP25 6RE",
+          },
+          {
+            "uprn" => "2000000002",
+            "parent_uprn" => "",
+            "full_address" => "Different address on the parent",
+            "postcode" => "IP25 6RE",
+            "is_parent" => 1,
+          },
+        ]
+      end
+
+      it "merges the new parents in the results and adds is_parent to parent results" do
         expect(results_helper.merge_parents(results:, parents:)).to eq(expected)
       end
     end

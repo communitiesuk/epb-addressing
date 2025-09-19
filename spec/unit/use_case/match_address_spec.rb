@@ -77,6 +77,7 @@ describe UseCase::MatchAddress do
           "parent_uprn" => nil,
           "full_address" => "Parent address",
           "postcode" => postcode,
+          "is_parent" => 1,
         },
       ]
     end
