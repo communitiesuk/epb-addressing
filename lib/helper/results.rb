@@ -19,5 +19,13 @@ module Helper
         result["tokens_out"] = Helper::Address.calculate_tokens(result["clean_address"])
       end
     end
+
+    # Refers to LenBuildingNum2 in the algorithm
+    def self.add_building_tokens(results:)
+      results.each do |result|
+        building_numbers = Helper::BuildingNumber.extract_building_numbers(result["clean_address"])
+        result["building_tokens"] = Helper::Address.calculate_tokens(building_numbers)
+      end
+    end
   end
 end

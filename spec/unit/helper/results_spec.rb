@@ -174,4 +174,50 @@ describe Helper::Results, type: :helper do
       expect(results_helper.add_tokens_out(results:)).to eq results_after_calculating_tokens_out
     end
   end
+
+  describe "#add_building_tokens" do
+    let(:results) do
+      [
+        {
+          "uprn" => "1000000001",
+          "parent_uprn" => "1000000002",
+          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "123 FLAT 2 TEST STREET",
+        },
+        {
+          "uprn" => "1000000002",
+          "parent_uprn" => "",
+          "full_address" => "123 Secondary Rd",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "123 SECONDARY ROAD",
+        },
+      ]
+    end
+
+    let(:results_with_building_tokens) do
+      [
+        {
+          "uprn" => "1000000001",
+          "parent_uprn" => "1000000002",
+          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "123 FLAT 2 TEST STREET",
+          "building_tokens" => 2,
+        },
+        {
+          "uprn" => "1000000002",
+          "parent_uprn" => "",
+          "full_address" => "123 Secondary Rd",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "123 SECONDARY ROAD",
+          "building_tokens" => 1,
+        },
+      ]
+    end
+
+    it "returns the number of token in the extracted building numbers" do
+      expect(described_class.add_building_tokens(results:)).to eq results_with_building_tokens
+    end
+  end
 end

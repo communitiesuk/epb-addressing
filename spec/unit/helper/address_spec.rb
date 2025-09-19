@@ -8,8 +8,8 @@ describe Helper::Address, type: :helper do
       end
 
       it "replaces symbols with words" do
-        expect(described_class.clean_address_string("Flat 42 & 3")).to eq("FLAT 42 and 3")
-        expect(described_class.clean_address_string("123@Test Street")).to eq("123 at TEST STREET")
+        expect(described_class.clean_address_string("Flat 42 & 3")).to eq("FLAT 42 AND 3")
+        expect(described_class.clean_address_string("123@Test Street")).to eq("123 AT TEST STREET")
       end
 
       it "removes quotes" do
@@ -66,6 +66,12 @@ describe Helper::Address, type: :helper do
         input = "Unit 5 - The Grange, Essex"
         expected = "UNIT 5 THE GRANGE"
         expect(described_class.clean_address_string(input)).to eq(expected)
+      end
+    end
+
+    context "when cleaning a clean address" do
+      it "the input does not change" do
+        expect(described_class.clean_address_string("123 FLAT 1A HAMPSHIRE STREET")).to eq("123 FLAT 1A HAMPSHIRE STREET")
       end
     end
   end

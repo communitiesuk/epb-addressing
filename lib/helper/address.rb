@@ -17,10 +17,10 @@ module Helper
       string.gsub!(/['?`*!#]/, "")
 
       # Replace "amp;", "&", and "+" with " and "
-      string.gsub!(/amp;|&|\+/, " and ")
+      string.gsub!(/amp;|&|\+/, " AND ")
 
       # Replace "@" with " at "
-      string.gsub!("@", " at ")
+      string.gsub!("@", " AT ")
 
       # Collapse multiple spaces into a single space
       string.squeeze!(" ")
