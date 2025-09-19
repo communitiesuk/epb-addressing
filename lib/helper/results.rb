@@ -13,5 +13,11 @@ module Helper
         result["cleanaddress"] = Helper::Address.clean_address_string(result["fulladdress"])
       end
     end
+
+    def self.add_tokens_out(results:)
+      results.each do |result|
+        result["tokens_out"] = Helper::Address.calculate_tokens(result["cleanaddress"])
+      end
+    end
   end
 end

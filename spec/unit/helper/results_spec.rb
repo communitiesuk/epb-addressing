@@ -126,4 +126,50 @@ describe Helper::Results, type: :helper do
       expect(results_helper.add_clean_address(results:)).to eq results_after_cleaning
     end
   end
+
+  describe "#add_tokens_out" do
+    let(:results) do
+      [
+        {
+          "uprn" => "1000000001",
+          "parentuprn" => "1000000002",
+          "fulladdress" => "123 Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "cleanaddress" => "123 TEST STREET",
+        },
+        {
+          "uprn" => "1000000002",
+          "parentuprn" => "",
+          "fulladdress" => "123 Secondary Rd",
+          "postcode" => "IP25 6RE",
+          "cleanaddress" => "123 SECONDARY ROAD",
+        },
+      ]
+    end
+
+    let(:results_after_calculating_tokens_out) do
+      [
+        {
+          "uprn" => "1000000001",
+          "parentuprn" => "1000000002",
+          "fulladdress" => "123 Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "cleanaddress" => "123 TEST STREET",
+          "tokens_out" => 3,
+        },
+        {
+          "uprn" => "1000000002",
+          "parentuprn" => "",
+          "fulladdress" => "123 Secondary Rd",
+          "postcode" => "IP25 6RE",
+          "cleanaddress" => "123 SECONDARY ROAD",
+          "tokens_out" => 3,
+        },
+      ]
+    end
+
+    it "adds tokens out to each value in the table" do
+      expect(results_helper.add_tokens_out(results:)).to eq results_after_calculating_tokens_out
+    end
+  end
 end

@@ -132,5 +132,9 @@ module Helper
       # Return the cleaned string
       string.strip
     end
+
+    def self.calculate_tokens(clean_string)
+      clean_string.count(" ") + 1
+    end
   end
 end
