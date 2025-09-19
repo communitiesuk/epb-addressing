@@ -21,29 +21,69 @@ describe UseCase::MatchAddress do
     let(:find_match_result) do
       [
         {
-          uprn: "1000000001",
-          parentuprn: "5678",
-          fulladdress: "Some address with parent",
-          postcode:,
+          "uprn" => "1000000001",
+          "parentuprn" => "2000000001",
+          "fulladdress" => "Some address with parent",
+          "postcode" => postcode,
         },
         {
-          uprn: "1000000002",
-          parentuprn: "",
-          fulladdress: "Some other address",
-          postcode:,
+          "uprn" => "1000000002",
+          "parentuprn" => "",
+          "fulladdress" => "Some other address",
+          "postcode" => postcode,
         },
         {
-          uprn: "1000000002",
-          parentuprn: nil,
-          fulladdress: "Some other address with nil parentuprn",
-          postcode:,
+          "uprn" => "1000000003",
+          "parentuprn" => nil,
+          "fulladdress" => "Some other address with nil parentuprn",
+          "postcode" => postcode,
+        },
+      ]
+    end
+
+    let(:find_parents_result) do
+      [
+        {
+          "uprn" => "2000000001",
+          "parentuprn" => nil,
+          "fulladdress" => "Parent address",
+          "postcode" => postcode,
+        },
+      ]
+    end
+
+    let(:expected_result) do
+      [
+        {
+          "uprn" => "1000000001",
+          "parentuprn" => "2000000001",
+          "fulladdress" => "Some address with parent",
+          "postcode" => postcode,
+        },
+        {
+          "uprn" => "1000000002",
+          "parentuprn" => "",
+          "fulladdress" => "Some other address",
+          "postcode" => postcode,
+        },
+        {
+          "uprn" => "1000000003",
+          "parentuprn" => nil,
+          "fulladdress" => "Some other address with nil parentuprn",
+          "postcode" => postcode,
+        },
+        {
+          "uprn" => "2000000001",
+          "parentuprn" => nil,
+          "fulladdress" => "Parent address",
+          "postcode" => postcode,
         },
       ]
     end
 
     before do
       allow(find_match_use_case).to receive(:execute).and_return(find_match_result)
-      allow(find_parents_use_case).to receive(:execute)
+      allow(find_parents_use_case).to receive(:execute).and_return(find_parents_result)
       use_case.execute(address:, postcode:)
     end
 
@@ -59,7 +99,13 @@ describe UseCase::MatchAddress do
 
     context "when calling the FindParents use case" do
       it "extracts the parentuprns from the FindMatch result" do
-        expect(find_parents_use_case).to have_received(:execute).with(uprns: %w[5678])
+        expect(find_parents_use_case).to have_received(:execute).with(uprns: %w[2000000001])
+      end
+    end
+
+    context "when doing a successful search" do
+      it "returns the expected result" do
+        expect(find_match_result).to eq(expected_result)
       end
     end
   end
