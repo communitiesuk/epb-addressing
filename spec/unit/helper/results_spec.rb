@@ -7,8 +7,8 @@ describe Helper::Results, type: :helper do
         [
           {
             "uprn" => "1000000001",
-            "parentuprn" => "1000000002",
-            "fulladdress" => "Some address with parent",
+            "parent_uprn" => "1000000002",
+            "full_address" => "Some address with parent",
             "postcode" => "IP25 6RE",
           },
         ]
@@ -18,8 +18,8 @@ describe Helper::Results, type: :helper do
         [
           {
             "uprn" => "1000000002",
-            "parentuprn" => "",
-            "fulladdress" => "Different address on the parent",
+            "parent_uprn" => "",
+            "full_address" => "Different address on the parent",
             "postcode" => "IP25 6RE",
           },
         ]
@@ -28,14 +28,14 @@ describe Helper::Results, type: :helper do
         [
           {
             "uprn" => "1000000001",
-            "parentuprn" => "1000000002",
-            "fulladdress" => "Some address with parent",
+            "parent_uprn" => "1000000002",
+            "full_address" => "Some address with parent",
             "postcode" => "IP25 6RE",
           },
           {
             "uprn" => "1000000002",
-            "parentuprn" => "",
-            "fulladdress" => "Different address on the parent",
+            "parent_uprn" => "",
+            "full_address" => "Different address on the parent",
             "postcode" => "IP25 6RE",
           },
         ]
@@ -51,8 +51,8 @@ describe Helper::Results, type: :helper do
         [
           {
             "uprn" => "1000000001",
-            "parentuprn" => "1000000002",
-            "fulladdress" => "Same address parent and child",
+            "parent_uprn" => "1000000002",
+            "full_address" => "Same address parent and child",
             "postcode" => "IP25 6RE",
           },
         ]
@@ -62,8 +62,8 @@ describe Helper::Results, type: :helper do
         [
           {
             "uprn" => "1000000002",
-            "parentuprn" => "",
-            "fulladdress" => "Same address parent and child",
+            "parent_uprn" => "",
+            "full_address" => "Same address parent and child",
             "postcode" => "IP25 6RE",
           },
         ]
@@ -72,8 +72,8 @@ describe Helper::Results, type: :helper do
         [
           {
             "uprn" => "1000000001",
-            "parentuprn" => "1000000002",
-            "fulladdress" => "Same address parent and child",
+            "parent_uprn" => "1000000002",
+            "full_address" => "Same address parent and child",
             "postcode" => "IP25 6RE",
           },
         ]
@@ -90,14 +90,14 @@ describe Helper::Results, type: :helper do
       [
         {
           "uprn" => "1000000001",
-          "parentuprn" => "1000000002",
-          "fulladdress" => "123 Test Street, Greater Manchester",
+          "parent_uprn" => "1000000002",
+          "full_address" => "123 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
         },
         {
           "uprn" => "1000000002",
-          "parentuprn" => "",
-          "fulladdress" => "123 Secondary Rd",
+          "parent_uprn" => "",
+          "full_address" => "123 Secondary Rd",
           "postcode" => "IP25 6RE",
         },
       ]
@@ -107,17 +107,17 @@ describe Helper::Results, type: :helper do
       [
         {
           "uprn" => "1000000001",
-          "parentuprn" => "1000000002",
-          "fulladdress" => "123 Test Street, Greater Manchester",
+          "parent_uprn" => "1000000002",
+          "full_address" => "123 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
-          "cleanaddress" => "123 TEST STREET",
+          "clean_address" => "123 TEST STREET",
         },
         {
           "uprn" => "1000000002",
-          "parentuprn" => "",
-          "fulladdress" => "123 Secondary Rd",
+          "parent_uprn" => "",
+          "full_address" => "123 Secondary Rd",
           "postcode" => "IP25 6RE",
-          "cleanaddress" => "123 SECONDARY ROAD",
+          "clean_address" => "123 SECONDARY ROAD",
         },
       ]
     end
@@ -132,17 +132,17 @@ describe Helper::Results, type: :helper do
       [
         {
           "uprn" => "1000000001",
-          "parentuprn" => "1000000002",
-          "fulladdress" => "123 Test Street, Greater Manchester",
+          "parent_uprn" => "1000000002",
+          "full_address" => "123 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
-          "cleanaddress" => "123 TEST STREET",
+          "clean_address" => "123 TEST STREET",
         },
         {
           "uprn" => "1000000002",
-          "parentuprn" => "",
-          "fulladdress" => "123 Secondary Rd",
+          "parent_uprn" => "",
+          "full_address" => "123 Secondary Rd",
           "postcode" => "IP25 6RE",
-          "cleanaddress" => "123 SECONDARY ROAD",
+          "clean_address" => "123 SECONDARY ROAD",
         },
       ]
     end
@@ -151,18 +151,18 @@ describe Helper::Results, type: :helper do
       [
         {
           "uprn" => "1000000001",
-          "parentuprn" => "1000000002",
-          "fulladdress" => "123 Test Street, Greater Manchester",
+          "parent_uprn" => "1000000002",
+          "full_address" => "123 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
-          "cleanaddress" => "123 TEST STREET",
+          "clean_address" => "123 TEST STREET",
           "tokens_out" => 3,
         },
         {
           "uprn" => "1000000002",
-          "parentuprn" => "",
-          "fulladdress" => "123 Secondary Rd",
+          "parent_uprn" => "",
+          "full_address" => "123 Secondary Rd",
           "postcode" => "IP25 6RE",
-          "cleanaddress" => "123 SECONDARY ROAD",
+          "clean_address" => "123 SECONDARY ROAD",
           "tokens_out" => 3,
         },
       ]

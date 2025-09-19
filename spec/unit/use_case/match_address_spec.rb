@@ -22,20 +22,20 @@ describe UseCase::MatchAddress do
       [
         {
           "uprn" => "1000000001",
-          "parentuprn" => "2000000001",
-          "fulladdress" => "Some address with parent",
+          "parent_uprn" => "2000000001",
+          "full_address" => "Some address with parent",
           "postcode" => postcode,
         },
         {
           "uprn" => "1000000002",
-          "parentuprn" => "",
-          "fulladdress" => "Some other address",
+          "parent_uprn" => "",
+          "full_address" => "Some other address",
           "postcode" => postcode,
         },
         {
           "uprn" => "1000000003",
-          "parentuprn" => nil,
-          "fulladdress" => "Some other address with nil parentuprn",
+          "parent_uprn" => nil,
+          "full_address" => "Some other address with nil parent_uprn",
           "postcode" => postcode,
         },
       ]
@@ -45,8 +45,8 @@ describe UseCase::MatchAddress do
       [
         {
           "uprn" => "2000000001",
-          "parentuprn" => nil,
-          "fulladdress" => "Parent address",
+          "parent_uprn" => nil,
+          "full_address" => "Parent address",
           "postcode" => postcode,
         },
       ]
@@ -56,26 +56,26 @@ describe UseCase::MatchAddress do
       [
         {
           "uprn" => "1000000001",
-          "parentuprn" => "2000000001",
-          "fulladdress" => "Some address with parent",
+          "parent_uprn" => "2000000001",
+          "full_address" => "Some address with parent",
           "postcode" => postcode,
         },
         {
           "uprn" => "1000000002",
-          "parentuprn" => "",
-          "fulladdress" => "Some other address",
+          "parent_uprn" => "",
+          "full_address" => "Some other address",
           "postcode" => postcode,
         },
         {
           "uprn" => "1000000003",
-          "parentuprn" => nil,
-          "fulladdress" => "Some other address with nil parentuprn",
+          "parent_uprn" => nil,
+          "full_address" => "Some other address with nil parent_uprn",
           "postcode" => postcode,
         },
         {
           "uprn" => "2000000001",
-          "parentuprn" => nil,
-          "fulladdress" => "Parent address",
+          "parent_uprn" => nil,
+          "full_address" => "Parent address",
           "postcode" => postcode,
         },
       ]
@@ -98,7 +98,7 @@ describe UseCase::MatchAddress do
     end
 
     context "when calling the FindParents use case" do
-      it "extracts the parentuprns from the FindMatch result" do
+      it "extracts the parent uprns from the FindMatch result" do
         expect(find_parents_use_case).to have_received(:execute).with(uprns: %w[2000000001])
       end
     end
