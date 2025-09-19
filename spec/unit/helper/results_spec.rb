@@ -84,4 +84,46 @@ describe Helper::Results, type: :helper do
       end
     end
   end
+
+  describe "#add_clean_address" do
+    let(:results) do
+      [
+        {
+          "uprn" => "1000000001",
+          "parentuprn" => "1000000002",
+          "fulladdress" => "123 Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+        },
+        {
+          "uprn" => "1000000002",
+          "parentuprn" => "",
+          "fulladdress" => "123 Secondary Rd",
+          "postcode" => "IP25 6RE",
+        },
+      ]
+    end
+
+    let(:results_after_cleaning) do
+      [
+        {
+          "uprn" => "1000000001",
+          "parentuprn" => "1000000002",
+          "fulladdress" => "123 Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "cleanaddress" => "123 TEST STREET",
+        },
+        {
+          "uprn" => "1000000002",
+          "parentuprn" => "",
+          "fulladdress" => "123 Secondary Rd",
+          "postcode" => "IP25 6RE",
+          "cleanaddress" => "123 SECONDARY ROAD",
+        },
+      ]
+    end
+
+    it "adds a clean address to each value in the table" do
+      expect(results_helper.add_clean_address(results:)).to eq results_after_cleaning
+    end
+  end
 end
