@@ -43,5 +43,21 @@ describe UseCase::FindMatch do
         expect(addresses_gateway).to have_received(:search_by_postcode).with(postcode:)
       end
     end
+
+    context "when there are not building numbers" do
+      let(:building_numbers) { "" }
+
+      before do
+        use_case.execute(building_numbers:, postcode:)
+      end
+
+      it "does not call the building and postcode method" do
+        expect(addresses_gateway).not_to have_received(:search_by_building_number_and_postcode)
+      end
+
+      it "calls the postcode only gateway method with the correct arguments" do
+        expect(addresses_gateway).to have_received(:search_by_postcode)
+      end
+    end
   end
 end

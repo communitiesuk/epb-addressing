@@ -7,7 +7,10 @@ module UseCase
     end
 
     def execute(building_numbers:, postcode:)
-      result = @addresses_gateway.search_by_building_number_and_postcode(building_numbers:, postcode:)
+      result = []
+      unless building_numbers.empty?
+        result = @addresses_gateway.search_by_building_number_and_postcode(building_numbers:, postcode:)
+      end
       if result.empty?
         result = @addresses_gateway.search_by_postcode(postcode:)
       end
