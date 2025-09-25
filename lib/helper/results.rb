@@ -27,5 +27,39 @@ module Helper
         result["building_tokens"] = Helper::Address.calculate_tokens(building_numbers)
       end
     end
+
+    def self.add_count_building_num_intersect(extracted_building_number:, results:)
+      results.each do |result|
+        result["count_building_num_intersect"] = Helper::Matching.count_tokens_intersect(input: extracted_building_number, result: Helper::BuildingNumber.extract_building_numbers(result["clean_address"]))
+      end
+    end
+
+    def self.add_tokens_intersect(input:, results:)
+      results.each do |result|
+        result["count_tokens_intersect"] = Helper::Matching.count_tokens_intersect(input:, result: result["clean_address"])
+      end
+    end
+
+    def self.remove_matches(results:)
+      max_tokens_match = results.max_by { |hash| hash[:score] }["count_tokens_intersect"]
+      results.reject! { |result| result["count_tokens_intersect"] < max_tokens_match }
+      results
+    end
+
+    def self.count_exact_numbers_and_not_parents(extracted_building_number:, results:)
+      results.count { |result| (Helper::BuildingNumber.extract_building_numbers(result["clean_address"]) == extracted_building_number) && result["is_parent"] != 1 }
+    end
+
+    def self.remove_parents(results:)
+      results.reject! { |result| (result["is_parent"] == 1) }
+      results
+    end
+
+    def self.remove_non_exact_numbers(extracted_building_number:, results:)
+      results.select! { |result| (Helper::BuildingNumber.extract_building_numbers(result["clean_address"]) == extracted_building_number) }
+      results.each do |result|
+        result["building_number_exact"] = 1
+      end
+    end
   end
 end
