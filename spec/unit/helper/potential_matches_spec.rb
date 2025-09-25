@@ -1,9 +1,9 @@
-describe Helper::Results, type: :helper do
-  subject(:results_helper) { described_class }
+describe Helper::PotentialMatches, type: :helper do
+  subject(:potential_matches_helper) { described_class }
 
   describe "#merge_parents" do
     context "when merging parents with different addresses" do
-      let(:results) do
+      let(:potential_matches) do
         [
           {
             "uprn" => "1000000001",
@@ -43,13 +43,13 @@ describe Helper::Results, type: :helper do
         ]
       end
 
-      it "merges the new parents in the results and adds is_parent to parent results" do
-        expect(results_helper.merge_parents(results:, parents:)).to eq(expected)
+      it "merges the new parents in the potential_matches and adds is_parent to parent results" do
+        expect(potential_matches_helper.merge_parents(potential_matches:, parents:)).to eq(expected)
       end
     end
 
     context "when merging a parent with the same address" do
-      let(:results) do
+      let(:potential_matches) do
         [
           {
             "uprn" => "1000000001",
@@ -81,14 +81,14 @@ describe Helper::Results, type: :helper do
         ]
       end
 
-      it "does not merge the new parent in the results" do
-        expect(results_helper.merge_parents(results:, parents:)).to eq(expected)
+      it "does not merge the new parent in the potential_matches" do
+        expect(potential_matches_helper.merge_parents(potential_matches:, parents:)).to eq(expected)
       end
     end
   end
 
   describe "#add_clean_address" do
-    let(:results) do
+    let(:potential_matches) do
       [
         {
           "uprn" => "1000000001",
@@ -105,7 +105,7 @@ describe Helper::Results, type: :helper do
       ]
     end
 
-    let(:results_after_cleaning) do
+    let(:potential_matches_after_cleaning) do
       [
         {
           "uprn" => "1000000001",
@@ -125,12 +125,12 @@ describe Helper::Results, type: :helper do
     end
 
     it "adds a clean address to each value in the table" do
-      expect(results_helper.add_clean_address(results:)).to eq results_after_cleaning
+      expect(potential_matches_helper.add_clean_address(potential_matches:)).to eq potential_matches_after_cleaning
     end
   end
 
   describe "#add_tokens_out" do
-    let(:results) do
+    let(:potential_matches) do
       [
         {
           "uprn" => "1000000001",
@@ -149,7 +149,7 @@ describe Helper::Results, type: :helper do
       ]
     end
 
-    let(:results_after_calculating_tokens_out) do
+    let(:potential_matches_after_calculating_tokens_out) do
       [
         {
           "uprn" => "1000000001",
@@ -171,12 +171,12 @@ describe Helper::Results, type: :helper do
     end
 
     it "adds tokens out to each value in the table" do
-      expect(results_helper.add_tokens_out(results:)).to eq results_after_calculating_tokens_out
+      expect(potential_matches_helper.add_tokens_out(potential_matches:)).to eq potential_matches_after_calculating_tokens_out
     end
   end
 
   describe "#add_building_tokens" do
-    let(:results) do
+    let(:potential_matches) do
       [
         {
           "uprn" => "1000000001",
@@ -195,7 +195,7 @@ describe Helper::Results, type: :helper do
       ]
     end
 
-    let(:results_with_building_tokens) do
+    let(:potential_matches_with_building_tokens) do
       [
         {
           "uprn" => "1000000001",
@@ -217,14 +217,14 @@ describe Helper::Results, type: :helper do
     end
 
     it "returns the number of token in the extracted building numbers" do
-      expect(described_class.add_building_tokens(results:)).to eq results_with_building_tokens
+      expect(potential_matches_helper.add_building_tokens(potential_matches:)).to eq potential_matches_with_building_tokens
     end
   end
 
   # set LenBuildingNumIntersect
   describe "#add_count_building_num_intersect" do
     let(:extracted_building_number) { "2" }
-    let(:results) do
+    let(:potential_matches) do
       [
         {
           "uprn" => "1000000001",
@@ -243,7 +243,7 @@ describe Helper::Results, type: :helper do
       ]
     end
 
-    let(:results_with_count_building_num_intersect) do
+    let(:potential_matches_with_count_building_num_intersect) do
       [
         {
           "uprn" => "1000000001",
@@ -265,14 +265,14 @@ describe Helper::Results, type: :helper do
     end
 
     it "returns the number of token in the extracted building numbers" do
-      expect(described_class.add_count_building_num_intersect(extracted_building_number:, results:)).to eq results_with_count_building_num_intersect
+      expect(potential_matches_helper.add_count_building_num_intersect(extracted_building_number:, potential_matches:)).to eq potential_matches_with_count_building_num_intersect
     end
   end
 
   # set TokensIntersect
   describe "#add_tokens_intersect" do
     let(:input) { "123 FLAT 2 TEST STREET GREATER MANCHESTER" }
-    let(:results) do
+    let(:potential_matches) do
       [
         {
           "uprn" => "1000000001",
@@ -297,7 +297,7 @@ describe Helper::Results, type: :helper do
         },
       ]
     end
-    let(:results_with_count_tokens_intersect) do
+    let(:potential_matches_with_count_tokens_intersect) do
       [
         {
           "uprn" => "1000000001",
@@ -327,13 +327,13 @@ describe Helper::Results, type: :helper do
     end
 
     it "returns the number of tokens in the extracted building numbers" do
-      expect(described_class.add_tokens_intersect(input:, results:)).to eq results_with_count_tokens_intersect
+      expect(potential_matches_helper.add_tokens_intersect(input:, potential_matches:)).to eq potential_matches_with_count_tokens_intersect
     end
   end
 
   describe "#remove_matches" do
     context "when there is only one match" do
-      let(:results) do
+      let(:potential_matches) do
         [
           {
             "uprn" => "1000000001",
@@ -361,7 +361,7 @@ describe Helper::Results, type: :helper do
           },
         ]
       end
-      let(:results_with_least_matches_removed) do
+      let(:potential_matches_with_least_matches_removed) do
         [
           {
             "uprn" => "1000000001",
@@ -375,12 +375,12 @@ describe Helper::Results, type: :helper do
       end
 
       it "returns the result with the most matches" do
-        expect(described_class.remove_matches(results:)).to eq results_with_least_matches_removed
+        expect(potential_matches_helper.remove_matches(potential_matches:)).to eq potential_matches_with_least_matches_removed
       end
     end
 
     context "when there are multiple matches" do
-      let(:results) do
+      let(:potential_matches) do
         [
           {
             "uprn" => "1000000001",
@@ -417,7 +417,7 @@ describe Helper::Results, type: :helper do
         ]
       end
 
-      let(:expected_results) do
+      let(:expected_potential_matches) do
         [
           {
             "uprn" => "1000000001",
@@ -446,13 +446,13 @@ describe Helper::Results, type: :helper do
         ]
       end
 
-      it "returns the results with the most matches" do
-        expect(described_class.remove_matches(results:)).to eq expected_results
+      it "returns the potential_matches with the most matches" do
+        expect(potential_matches_helper.remove_matches(potential_matches:)).to eq expected_potential_matches
       end
     end
 
     context "when there are no matches" do
-      let(:results) do
+      let(:potential_matches) do
         [
           {
             "uprn" => "1000000001",
@@ -481,8 +481,8 @@ describe Helper::Results, type: :helper do
         ]
       end
 
-      it "returns the results with the most matches" do
-        expect(described_class.remove_matches(results:)).to eq results
+      it "returns the potential_matches with the most matches" do
+        expect(potential_matches_helper.remove_matches(potential_matches:)).to eq potential_matches
       end
     end
   end
@@ -492,7 +492,7 @@ describe Helper::Results, type: :helper do
   describe "#count_exact_numbers_and_not_parents" do
     context "when there are matches" do
       let(:extracted_building_number) { "1 2" }
-      let(:results) do
+      let(:potential_matches) do
         [
           {
             "uprn" => "1000000001",
@@ -523,13 +523,13 @@ describe Helper::Results, type: :helper do
       end
 
       it "returns the number of matches" do
-        expect(described_class.count_exact_numbers_and_not_parents(extracted_building_number:, results:)).to eq 1
+        expect(potential_matches_helper.count_exact_numbers_and_not_parents(extracted_building_number:, potential_matches:)).to eq 1
       end
     end
 
     context "when there are no matches" do
       let(:extracted_building_number) { "1 3" }
-      let(:results) do
+      let(:potential_matches) do
         [
           {
             "uprn" => "1000000001",
@@ -560,7 +560,7 @@ describe Helper::Results, type: :helper do
       end
 
       it "returns 0" do
-        expect(described_class.count_exact_numbers_and_not_parents(extracted_building_number:, results:)).to eq 0
+        expect(potential_matches_helper.count_exact_numbers_and_not_parents(extracted_building_number:, potential_matches:)).to eq 0
       end
     end
   end
@@ -568,7 +568,7 @@ describe Helper::Results, type: :helper do
   describe "#remove_non_exact_numbers" do
     let(:extracted_building_number) { "1 2" }
 
-    let(:results) do
+    let(:potential_matches) do
       [
         {
           "uprn" => "1000000001",
@@ -589,7 +589,7 @@ describe Helper::Results, type: :helper do
       ]
     end
 
-    let(:results_with_only_exact_building_numbers) do
+    let(:potential_matches_with_only_exact_building_numbers) do
       [
         {
           "uprn" => "1000000001",
@@ -604,12 +604,12 @@ describe Helper::Results, type: :helper do
     end
 
     it "returns the result with the exact building number and is not a parent uprn" do
-      expect(described_class.remove_non_exact_numbers(extracted_building_number:, results:)).to eq results_with_only_exact_building_numbers
+      expect(potential_matches_helper.remove_non_exact_numbers(extracted_building_number:, potential_matches:)).to eq potential_matches_with_only_exact_building_numbers
     end
   end
 
   describe "#remove_parents" do
-    let(:results) do
+    let(:potential_matches) do
       [
         {
           "uprn" => "1000000001",
@@ -630,7 +630,7 @@ describe Helper::Results, type: :helper do
         },
       ]
     end
-    let(:results_without_parents) do
+    let(:potential_matches_without_parents) do
       [
         {
           "uprn" => "1000000001",
@@ -644,7 +644,7 @@ describe Helper::Results, type: :helper do
     end
 
     it "returns the result with the exact building number and is not a parent uprn" do
-      expect(described_class.remove_parents(results:)).to eq results_without_parents
+      expect(potential_matches_helper.remove_parents(potential_matches:)).to eq potential_matches_without_parents
     end
   end
 end

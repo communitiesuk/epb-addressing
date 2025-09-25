@@ -1,4 +1,4 @@
-describe UseCase::FindMatch do
+describe UseCase::FindMatches do
   subject(:use_case) { described_class.new(addresses_gateway:) }
 
   let(:addresses_gateway) { instance_double Gateway::AddressesGateway }

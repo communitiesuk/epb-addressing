@@ -1,8 +1,8 @@
 describe UseCase::MatchAddress do
-  subject(:use_case) { described_class.new(find_match_use_case:, find_parents_use_case:) }
+  subject(:use_case) { described_class.new(find_matches_use_case:, find_parents_use_case:) }
 
-  let(:find_match_use_case) do
-    instance_double(UseCase::FindMatch)
+  let(:find_matches_use_case) do
+    instance_double(UseCase::FindMatches)
   end
 
   let(:find_parents_use_case) do
@@ -18,7 +18,7 @@ describe UseCase::MatchAddress do
       "H14 9YA"
     end
 
-    let(:find_match_result) do
+    let(:find_matches_result) do
       [
         {
           "uprn" => "1000000001",
@@ -83,30 +83,30 @@ describe UseCase::MatchAddress do
     end
 
     before do
-      allow(find_match_use_case).to receive(:execute).and_return(find_match_result)
+      allow(find_matches_use_case).to receive(:execute).and_return(find_matches_result)
       allow(find_parents_use_case).to receive(:execute).and_return(find_parents_result)
       use_case.execute(address:, postcode:)
     end
 
-    context "when calling the FindMatch use case" do
+    context "when calling the FindMatches use case" do
       it "extracts the building numbers before calling the use case" do
-        expect(find_match_use_case).to have_received(:execute).with(building_numbers: "1 171 1 129 27 71", postcode: anything)
+        expect(find_matches_use_case).to have_received(:execute).with(building_numbers: "1 171 1 129 27 71", postcode: anything)
       end
 
       it "passes the postcode to the use case" do
-        expect(find_match_use_case).to have_received(:execute).with(building_numbers: anything, postcode:)
+        expect(find_matches_use_case).to have_received(:execute).with(building_numbers: anything, postcode:)
       end
     end
 
     context "when calling the FindParents use case" do
-      it "extracts the parent uprns from the FindMatch result" do
+      it "extracts the parent uprns from the FindMatches result" do
         expect(find_parents_use_case).to have_received(:execute).with(uprns: %w[2000000001])
       end
     end
 
     context "when doing a successful search" do
       it "returns the expected result" do
-        expect(find_match_result).to eq(expected_result)
+        expect(find_matches_result).to eq(expected_result)
       end
     end
   end
