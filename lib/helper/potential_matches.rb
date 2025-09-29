@@ -90,5 +90,13 @@ module Helper
       end
       potential_matches
     end
+
+    def self.add_is_exact_match(input:, potential_matches:)
+      potential_matches.each do |potential_match|
+        if potential_match["is_parent"] != 1 && input == potential_match["clean_address"]
+          potential_match["is_exact_match"] = 1
+        end
+      end
+    end
   end
 end

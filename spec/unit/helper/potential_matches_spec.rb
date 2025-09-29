@@ -988,4 +988,116 @@ describe Helper::PotentialMatches, type: :helper do
       end
     end
   end
+
+  describe "#add_is_exact_match" do
+    context "when a clean potential-match address matches the clean input address" do
+      let(:potential_matches) do
+        [
+          {
+            "uprn" => "1000000001",
+            "parent_uprn" => "",
+            "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+            "postcode" => "IP25 6RE",
+            "clean_address" => "123 FLAT 2 TEST STREET",
+            "tokens_out" => 5,
+            "count_tokens_matches_2" => 5,
+          },
+          {
+            "uprn" => "1000000002",
+            "parent_uprn" => "",
+            "full_address" => "123 Test Street, Greater Manchester",
+            "postcode" => "IP25 6RE",
+            "clean_address" => "123 TEST STREET",
+            "tokens_out" => 3,
+            "count_tokens_matches_2" => 3,
+          },
+        ]
+      end
+      let(:expected_potential_matches) do
+        [
+          {
+            "uprn" => "1000000001",
+            "parent_uprn" => "",
+            "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+            "postcode" => "IP25 6RE",
+            "clean_address" => "123 FLAT 2 TEST STREET",
+            "tokens_out" => 5,
+            "count_tokens_matches_2" => 5,
+            "is_exact_match" => 1,
+          },
+          {
+            "uprn" => "1000000002",
+            "parent_uprn" => "",
+            "full_address" => "123 Test Street, Greater Manchester",
+            "postcode" => "IP25 6RE",
+            "clean_address" => "123 TEST STREET",
+            "tokens_out" => 3,
+            "count_tokens_matches_2" => 3,
+          },
+        ]
+      end
+
+      let(:clean_input) { "123 FLAT 2 TEST STREET" }
+
+      it "adds is_exact_match to the potential match" do
+        expect(potential_matches_helper.add_is_exact_match(input: clean_input, potential_matches:)).to eq expected_potential_matches
+      end
+    end
+
+    context "when a clean potential-match parent address matches the clean input address" do
+      let(:potential_matches) do
+        [
+          {
+            "uprn" => "1000000001",
+            "parent_uprn" => "",
+            "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+            "postcode" => "IP25 6RE",
+            "clean_address" => "123 FLAT 2 TEST STREET",
+            "tokens_out" => 5,
+            "count_tokens_matches_2" => 5,
+          },
+          {
+            "uprn" => "1000000002",
+            "parent_uprn" => "",
+            "full_address" => "123 Test Street, Greater Manchester",
+            "postcode" => "IP25 6RE",
+            "clean_address" => "123 TEST STREET",
+            "tokens_out" => 3,
+            "count_tokens_matches_2" => 3,
+            "is_parent" => 1,
+          },
+        ]
+      end
+
+      let(:expected_potential_matches) do
+        [
+          {
+            "uprn" => "1000000001",
+            "parent_uprn" => "",
+            "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+            "postcode" => "IP25 6RE",
+            "clean_address" => "123 FLAT 2 TEST STREET",
+            "tokens_out" => 5,
+            "count_tokens_matches_2" => 5,
+          },
+          {
+            "uprn" => "1000000002",
+            "parent_uprn" => "",
+            "full_address" => "123 Test Street, Greater Manchester",
+            "postcode" => "IP25 6RE",
+            "clean_address" => "123 TEST STREET",
+            "tokens_out" => 3,
+            "count_tokens_matches_2" => 3,
+            "is_parent" => 1,
+          },
+        ]
+      end
+
+      let(:clean_input) { "123 TEST STREET" }
+
+      it "does not add is_exact_match to the potential match" do
+        expect(potential_matches_helper.add_is_exact_match(input: clean_input, potential_matches:)).to eq expected_potential_matches
+      end
+    end
+  end
 end
