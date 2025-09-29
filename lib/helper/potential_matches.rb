@@ -43,9 +43,9 @@ module Helper
       end
     end
 
-    def self.remove_matches(potential_matches:)
-      max_tokens_match = potential_matches.max_by { |hash| hash[:score] }["count_tokens_intersect"]
-      potential_matches.reject! { |potential_match| potential_match["count_tokens_intersect"] < max_tokens_match }
+    def self.remove_matches(potential_matches:, attribute_name:)
+      max_tokens_match = potential_matches.max_by { |hash| hash[:score] }[attribute_name]
+      potential_matches.reject! { |potential_match| potential_match[attribute_name] < max_tokens_match }
       potential_matches
     end
 

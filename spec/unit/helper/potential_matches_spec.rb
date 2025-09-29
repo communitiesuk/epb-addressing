@@ -332,157 +332,212 @@ describe Helper::PotentialMatches, type: :helper do
   end
 
   describe "#remove_matches" do
-    context "when there is a single result with the maximum number of token intersects" do
-      let(:potential_matches) do
-        [
-          {
-            "uprn" => "1000000001",
-            "parent_uprn" => "1000000002",
-            "full_address" => "123 Flat 2, Test Street, Greater Manchester",
-            "postcode" => "IP25 6RE",
-            "clean_address" => "123 FLAT 2 TEST STREET",
-            "count_tokens_intersect" => 5,
-          },
-          {
-            "uprn" => "1000000002",
-            "parent_uprn" => "",
-            "full_address" => "123 Test Street, Greater Manchester",
-            "postcode" => "IP25 6RE",
-            "clean_address" => "123 TEST STREET",
-            "count_tokens_intersect" => 3,
-          },
-          {
-            "uprn" => "1000000003",
-            "parent_uprn" => "",
-            "full_address" => "124 Test Street, Greater Manchester",
-            "postcode" => "IP25 6RE",
-            "clean_address" => "124 TEST STREET",
-            "count_tokens_intersect" => 2,
-          },
-        ]
-      end
-      let(:potential_matches_with_least_matches_removed) do
-        [
-          {
-            "uprn" => "1000000001",
-            "parent_uprn" => "1000000002",
-            "full_address" => "123 Flat 2, Test Street, Greater Manchester",
-            "postcode" => "IP25 6RE",
-            "clean_address" => "123 FLAT 2 TEST STREET",
-            "count_tokens_intersect" => 5,
-          },
-        ]
+    context "when the attribute name is count_tokens_intersect" do
+      let(:attribute_name) { "count_tokens_intersect" }
+
+      context "when there is a single result with the maximum number of token intersects" do
+        let(:potential_matches) do
+          [
+            {
+              "uprn" => "1000000001",
+              "parent_uprn" => "1000000002",
+              "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "123 FLAT 2 TEST STREET",
+              "count_tokens_intersect" => 5,
+            },
+            {
+              "uprn" => "1000000002",
+              "parent_uprn" => "",
+              "full_address" => "123 Test Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "123 TEST STREET",
+              "count_tokens_intersect" => 3,
+            },
+            {
+              "uprn" => "1000000003",
+              "parent_uprn" => "",
+              "full_address" => "124 Test Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "124 TEST STREET",
+              "count_tokens_intersect" => 2,
+            },
+          ]
+        end
+        let(:potential_matches_with_least_matches_removed) do
+          [
+            {
+              "uprn" => "1000000001",
+              "parent_uprn" => "1000000002",
+              "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "123 FLAT 2 TEST STREET",
+              "count_tokens_intersect" => 5,
+            },
+          ]
+        end
+
+        it "returns the result with the most matches" do
+          expect(potential_matches_helper.remove_matches(potential_matches:, attribute_name:)).to eq potential_matches_with_least_matches_removed
+        end
       end
 
-      it "returns the result with the most matches" do
-        expect(potential_matches_helper.remove_matches(potential_matches:)).to eq potential_matches_with_least_matches_removed
+      context "when there are several results with the maximum number of token intersects" do
+        let(:potential_matches) do
+          [
+            {
+              "uprn" => "1000000001",
+              "parent_uprn" => "1000000002",
+              "full_address" => "1, Test Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "1 TEST STREET",
+              "count_tokens_intersect" => 2,
+            },
+            {
+              "uprn" => "1000000002",
+              "parent_uprn" => "",
+              "full_address" => "2 Test Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "2 TEST STREET",
+              "count_tokens_intersect" => 2,
+            },
+            {
+              "uprn" => "1000000003",
+              "parent_uprn" => "",
+              "full_address" => "3 Test Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "3 TEST STREET",
+              "count_tokens_intersect" => 2,
+            },
+            {
+              "uprn" => "1000000004",
+              "parent_uprn" => "",
+              "full_address" => "3 Tst Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "3 TST STREET",
+              "count_tokens_intersect" => 1,
+            },
+          ]
+        end
+
+        let(:expected_potential_matches) do
+          [
+            {
+              "uprn" => "1000000001",
+              "parent_uprn" => "1000000002",
+              "full_address" => "1, Test Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "1 TEST STREET",
+              "count_tokens_intersect" => 2,
+            },
+            {
+              "uprn" => "1000000002",
+              "parent_uprn" => "",
+              "full_address" => "2 Test Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "2 TEST STREET",
+              "count_tokens_intersect" => 2,
+            },
+            {
+              "uprn" => "1000000003",
+              "parent_uprn" => "",
+              "full_address" => "3 Test Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "3 TEST STREET",
+              "count_tokens_intersect" => 2,
+            },
+          ]
+        end
+
+        it "returns the potential_matches with the most matches" do
+          expect(potential_matches_helper.remove_matches(potential_matches:, attribute_name:)).to eq expected_potential_matches
+        end
+      end
+
+      context "when there are no matches" do
+        let(:potential_matches) do
+          [
+            {
+              "uprn" => "1000000001",
+              "parent_uprn" => "1000000002",
+              "full_address" => "1, Test Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "1 TEST STREET",
+              "count_tokens_intersect" => 0,
+            },
+            {
+              "uprn" => "1000000002",
+              "parent_uprn" => "",
+              "full_address" => "2 Test Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "2 TEST STREET",
+              "count_tokens_intersect" => 0,
+            },
+            {
+              "uprn" => "1000000003",
+              "parent_uprn" => "",
+              "full_address" => "3 Test Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "3 TEST STREET",
+              "count_tokens_intersect" => 0,
+            },
+          ]
+        end
+
+        it "returns the potential_matches with the most matches" do
+          expect(potential_matches_helper.remove_matches(potential_matches:, attribute_name:)).to eq potential_matches
+        end
       end
     end
 
-    context "when there are several results with the maximum number of token intersects" do
-      let(:potential_matches) do
-        [
-          {
-            "uprn" => "1000000001",
-            "parent_uprn" => "1000000002",
-            "full_address" => "1, Test Street, Greater Manchester",
-            "postcode" => "IP25 6RE",
-            "clean_address" => "1 TEST STREET",
-            "count_tokens_intersect" => 2,
-          },
-          {
-            "uprn" => "1000000002",
-            "parent_uprn" => "",
-            "full_address" => "2 Test Street, Greater Manchester",
-            "postcode" => "IP25 6RE",
-            "clean_address" => "2 TEST STREET",
-            "count_tokens_intersect" => 2,
-          },
-          {
-            "uprn" => "1000000003",
-            "parent_uprn" => "",
-            "full_address" => "3 Test Street, Greater Manchester",
-            "postcode" => "IP25 6RE",
-            "clean_address" => "3 TEST STREET",
-            "count_tokens_intersect" => 2,
-          },
-          {
-            "uprn" => "1000000004",
-            "parent_uprn" => "",
-            "full_address" => "3 Tst Street, Greater Manchester",
-            "postcode" => "IP25 6RE",
-            "clean_address" => "3 TST STREET",
-            "count_tokens_intersect" => 1,
-          },
-        ]
-      end
+    context "when the attribute name is count_tokens_matches_1" do
+      let(:attribute_name) { "count_tokens_matches_1" }
 
-      let(:expected_potential_matches) do
-        [
-          {
-            "uprn" => "1000000001",
-            "parent_uprn" => "1000000002",
-            "full_address" => "1, Test Street, Greater Manchester",
-            "postcode" => "IP25 6RE",
-            "clean_address" => "1 TEST STREET",
-            "count_tokens_intersect" => 2,
-          },
-          {
-            "uprn" => "1000000002",
-            "parent_uprn" => "",
-            "full_address" => "2 Test Street, Greater Manchester",
-            "postcode" => "IP25 6RE",
-            "clean_address" => "2 TEST STREET",
-            "count_tokens_intersect" => 2,
-          },
-          {
-            "uprn" => "1000000003",
-            "parent_uprn" => "",
-            "full_address" => "3 Test Street, Greater Manchester",
-            "postcode" => "IP25 6RE",
-            "clean_address" => "3 TEST STREET",
-            "count_tokens_intersect" => 2,
-          },
-        ]
-      end
+      context "when there is a single result with the maximum number of token intersects" do
+        let(:potential_matches) do
+          [
+            {
+              "uprn" => "1000000001",
+              "parent_uprn" => "1000000002",
+              "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "123 FLAT 2 TEST STREET",
+              "count_tokens_matches_1" => 5,
+            },
+            {
+              "uprn" => "1000000002",
+              "parent_uprn" => "",
+              "full_address" => "123 Test Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "123 TEST STREET",
+              "count_tokens_matches_1" => 3,
+            },
+            {
+              "uprn" => "1000000003",
+              "parent_uprn" => "",
+              "full_address" => "124 Test Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "124 TEST STREET",
+              "count_tokens_matches_1" => 2,
+            },
+          ]
+        end
+        let(:potential_matches_with_least_matches_removed) do
+          [
+            {
+              "uprn" => "1000000001",
+              "parent_uprn" => "1000000002",
+              "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "123 FLAT 2 TEST STREET",
+              "count_tokens_matches_1" => 5,
+            },
+          ]
+        end
 
-      it "returns the potential_matches with the most matches" do
-        expect(potential_matches_helper.remove_matches(potential_matches:)).to eq expected_potential_matches
-      end
-    end
-
-    context "when there are no matches" do
-      let(:potential_matches) do
-        [
-          {
-            "uprn" => "1000000001",
-            "parent_uprn" => "1000000002",
-            "full_address" => "1, Test Street, Greater Manchester",
-            "postcode" => "IP25 6RE",
-            "clean_address" => "1 TEST STREET",
-            "count_tokens_intersect" => 0,
-          },
-          {
-            "uprn" => "1000000002",
-            "parent_uprn" => "",
-            "full_address" => "2 Test Street, Greater Manchester",
-            "postcode" => "IP25 6RE",
-            "clean_address" => "2 TEST STREET",
-            "count_tokens_intersect" => 0,
-          },
-          {
-            "uprn" => "1000000003",
-            "parent_uprn" => "",
-            "full_address" => "3 Test Street, Greater Manchester",
-            "postcode" => "IP25 6RE",
-            "clean_address" => "3 TEST STREET",
-            "count_tokens_intersect" => 0,
-          },
-        ]
-      end
-
-      it "returns the potential_matches with the most matches" do
-        expect(potential_matches_helper.remove_matches(potential_matches:)).to eq potential_matches
+        it "returns the result with the most matches" do
+          expect(potential_matches_helper.remove_matches(potential_matches:, attribute_name:)).to eq potential_matches_with_least_matches_removed
+        end
       end
     end
   end
