@@ -67,7 +67,7 @@ module Helper
 
     def self.add_tokens_matches_1(input:, potential_matches:)
       potential_matches.each do |potential_match|
-        potential_match["count_tokens_matches_1"] = Helper::Matching.count_tokens_matching(input:, potential_match: potential_match["clean_address"])
+        potential_match["count_tokens_matches_1"] = Helper::Matching.count_tokens_matching(string_1: input, string_2: potential_match["clean_address"])
       end
     end
   end

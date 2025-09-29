@@ -77,7 +77,7 @@ describe Helper::Matching, type: :helper do
       let(:identical_strings) { "FLAT 43 1A FAKE STREET" }
 
       it "returns the correct number of tokens that match" do
-        expect(described_class.count_tokens_matching(input: identical_strings, potential_match: identical_strings)).to eq(5)
+        expect(described_class.count_tokens_matching(string_1: identical_strings, string_2: identical_strings)).to eq(5)
       end
     end
 
@@ -86,7 +86,7 @@ describe Helper::Matching, type: :helper do
       let(:potential_match) { "FLAT 43 BUILDING 1A FAKE STREET" }
 
       it "returns the correct number of tokens that match" do
-        expect(described_class.count_tokens_matching(input:, potential_match:)).to eq(5)
+        expect(described_class.count_tokens_matching(string_1: input, string_2: potential_match)).to eq(5)
       end
     end
 
@@ -95,7 +95,7 @@ describe Helper::Matching, type: :helper do
       let(:potential_match) { " 43 1A FAKE STREET" }
 
       it "returns the correct number of tokens that match" do
-        expect(described_class.count_tokens_matching(input:, potential_match:)).to eq(4)
+        expect(described_class.count_tokens_matching(string_1: input, string_2: potential_match)).to eq(4)
       end
     end
 
@@ -104,7 +104,7 @@ describe Helper::Matching, type: :helper do
       let(:potential_match) { "FLAT 43 1A FAKE STREET" }
 
       it "counts the repeated word" do
-        expect(described_class.count_tokens_matching(input:, potential_match:)).to eq(6)
+        expect(described_class.count_tokens_matching(string_1: input, string_2: potential_match)).to eq(6)
       end
     end
   end
