@@ -76,5 +76,11 @@ module Helper
         potential_match["count_tokens_matches_2"] = Helper::Matching.count_tokens_matching(string_1: potential_match["clean_address"], string_2: input)
       end
     end
+
+    def self.add_percentage_match(potential_matches:)
+      potential_matches.each do |potential_match|
+        potential_match["percentage_match"] = potential_match["count_tokens_matches_2"].to_f / potential_match["tokens_out"]
+      end
+    end
   end
 end

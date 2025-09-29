@@ -826,4 +826,76 @@ describe Helper::PotentialMatches, type: :helper do
       expect(potential_matches_helper.add_tokens_matches_2(input:, potential_matches:)).to eq potential_matches_with_count_tokens_matches
     end
   end
+
+  describe "#add_percentage_match" do
+    let(:potential_matches) do
+      [
+        {
+          "uprn" => "1000000001",
+          "parent_uprn" => "1000000002",
+          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "123 FLAT 2 TEST STREET",
+          "tokens_out" => 5,
+          "count_tokens_matches_2" => 5,
+        },
+        {
+          "uprn" => "1000000002",
+          "parent_uprn" => "",
+          "full_address" => "123 Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "123 TEST STREET",
+          "tokens_out" => 3,
+          "count_tokens_matches_2" => 3,
+        },
+        {
+          "uprn" => "1000000003",
+          "parent_uprn" => "",
+          "full_address" => "124 Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "124 TEST STREET",
+          "tokens_out" => 3,
+          "count_tokens_matches_2" => 2,
+        },
+      ]
+    end
+    let(:potential_matches_with_percentage_matches) do
+      [
+        {
+          "uprn" => "1000000001",
+          "parent_uprn" => "1000000002",
+          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "123 FLAT 2 TEST STREET",
+          "tokens_out" => 5,
+          "count_tokens_matches_2" => 5,
+          "percentage_match" => 1.0,
+        },
+        {
+          "uprn" => "1000000002",
+          "parent_uprn" => "",
+          "full_address" => "123 Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "123 TEST STREET",
+          "tokens_out" => 3,
+          "count_tokens_matches_2" => 3,
+          "percentage_match" => 1.0,
+        },
+        {
+          "uprn" => "1000000003",
+          "parent_uprn" => "",
+          "full_address" => "124 Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "124 TEST STREET",
+          "tokens_out" => 3,
+          "count_tokens_matches_2" => 2,
+          "percentage_match" => 0.6666666666666666,
+        },
+      ]
+    end
+
+    it "adds percentage match float to each result" do
+      expect(potential_matches_helper.add_percentage_match(potential_matches:)).to eq potential_matches_with_percentage_matches
+    end
+  end
 end
