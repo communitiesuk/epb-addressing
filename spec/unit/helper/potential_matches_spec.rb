@@ -898,4 +898,94 @@ describe Helper::PotentialMatches, type: :helper do
       expect(potential_matches_helper.add_percentage_match(potential_matches:)).to eq potential_matches_with_percentage_matches
     end
   end
+
+  describe "#cleanup_parents" do
+    context "when there are potential matches that are not parents" do
+      let(:potential_matches) do
+        [
+          {
+            "uprn" => "1000000001",
+            "parent_uprn" => "2000000002",
+            "full_address" => "Some address with parent",
+            "postcode" => "IP25 6RE",
+          },
+          {
+            "uprn" => "2000000002",
+            "parent_uprn" => "",
+            "full_address" => "Different address on the parent",
+            "postcode" => "IP25 6RE",
+            "is_parent" => 1,
+          },
+        ]
+      end
+      let(:potential_matches_without_parents) do
+        [
+          {
+            "uprn" => "1000000001",
+            "parent_uprn" => "2000000002",
+            "full_address" => "Some address with parent",
+            "postcode" => "IP25 6RE",
+          },
+        ]
+      end
+
+      it "removes parents" do
+        expect(potential_matches_helper.cleanup_parents(potential_matches:)).to eq potential_matches_without_parents
+      end
+    end
+
+    context "when all the potential matches are parents" do
+      let(:potential_matches) do
+        [
+          {
+            "uprn" => "1000000001",
+            "parent_uprn" => "2000000002",
+            "full_address" => "Some address with parent",
+            "postcode" => "IP25 6RE",
+            "is_parent" => 1,
+          },
+          {
+            "uprn" => "2000000002",
+            "parent_uprn" => "",
+            "full_address" => "Different address on the parent",
+            "postcode" => "IP25 6RE",
+            "is_parent" => 1,
+          },
+        ]
+      end
+      let(:expected_potential_matches) do
+        potential_matches.deep_dup
+      end
+
+      it "does not delete any parent" do
+        expect(potential_matches_helper.cleanup_parents(potential_matches:)).to eq expected_potential_matches
+      end
+    end
+
+    context "when all the potential matches are not parents" do
+      let(:potential_matches) do
+        [
+          {
+            "uprn" => "1000000001",
+            "parent_uprn" => "2000000002",
+            "full_address" => "Some address with parent",
+            "postcode" => "IP25 6RE",
+          },
+          {
+            "uprn" => "2000000002",
+            "parent_uprn" => "",
+            "full_address" => "Different address on the parent",
+            "postcode" => "IP25 6RE",
+          },
+        ]
+      end
+      let(:expected_potential_matches) do
+        potential_matches.deep_dup
+      end
+
+      it "does not delete any parent" do
+        expect(potential_matches_helper.cleanup_parents(potential_matches:)).to eq expected_potential_matches
+      end
+    end
+  end
 end

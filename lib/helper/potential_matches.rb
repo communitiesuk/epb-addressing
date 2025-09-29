@@ -82,5 +82,13 @@ module Helper
         potential_match["percentage_match"] = potential_match["count_tokens_matches_2"].to_f / potential_match["tokens_out"]
       end
     end
+
+    def self.cleanup_parents(potential_matches:)
+      _parents, non_parents = potential_matches.partition { |m| m["is_parent"] == 1 }
+      if non_parents.any?
+        potential_matches.replace(non_parents)
+      end
+      potential_matches
+    end
   end
 end
