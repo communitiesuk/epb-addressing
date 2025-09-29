@@ -14,6 +14,7 @@ module Helper
       end
     end
 
+    # TokensOut
     def self.add_tokens_out(potential_matches:)
       potential_matches.each do |potential_match|
         potential_match["tokens_out"] = Helper::Address.calculate_tokens(potential_match["clean_address"])
@@ -28,12 +29,14 @@ module Helper
       end
     end
 
+    # LenBuildingNumIntersect
     def self.add_count_building_num_intersect(extracted_building_number:, potential_matches:)
       potential_matches.each do |potential_match|
         potential_match["count_building_num_intersect"] = Helper::Matching.count_tokens_intersect(input: extracted_building_number, potential_match: Helper::BuildingNumber.extract_building_numbers(potential_match["clean_address"]))
       end
     end
 
+    # TokensIntersect
     def self.add_tokens_intersect(input:, potential_matches:)
       potential_matches.each do |potential_match|
         potential_match["count_tokens_intersect"] = Helper::Matching.count_tokens_intersect(input:, potential_match: potential_match["clean_address"])
@@ -59,6 +62,12 @@ module Helper
       potential_matches.select! { |potential_match| (Helper::BuildingNumber.extract_building_numbers(potential_match["clean_address"]) == extracted_building_number) }
       potential_matches.each do |potential_match|
         potential_match["building_number_exact"] = 1
+      end
+    end
+
+    def self.add_tokens_matches_1(input:, potential_matches:)
+      potential_matches.each do |potential_match|
+        potential_match["count_tokens_matches_1"] = Helper::Matching.count_tokens_matching(input:, potential_match: potential_match["clean_address"])
       end
     end
   end

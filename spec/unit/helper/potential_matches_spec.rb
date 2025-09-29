@@ -332,7 +332,7 @@ describe Helper::PotentialMatches, type: :helper do
   end
 
   describe "#remove_matches" do
-    context "when there is only one match" do
+    context "when there is a single result with the maximum number of token intersects" do
       let(:potential_matches) do
         [
           {
@@ -379,7 +379,7 @@ describe Helper::PotentialMatches, type: :helper do
       end
     end
 
-    context "when there are multiple matches" do
+    context "when there are several results with the maximum number of token intersects" do
       let(:potential_matches) do
         [
           {
@@ -645,6 +645,68 @@ describe Helper::PotentialMatches, type: :helper do
 
     it "returns the result with the exact building number and is not a parent uprn" do
       expect(potential_matches_helper.remove_parents(potential_matches:)).to eq potential_matches_without_parents
+    end
+  end
+
+  # TokensMatched1
+  describe "#add_token_matches_1" do
+    let(:input) { "123 FLAT 2 TEST STREET GREATER MANCHESTER" }
+    let(:potential_matches) do
+      [
+        {
+          "uprn" => "1000000001",
+          "parent_uprn" => "1000000002",
+          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "123 FLAT 2 TEST STREET",
+        },
+        {
+          "uprn" => "1000000002",
+          "parent_uprn" => "",
+          "full_address" => "123 Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "123 TEST STREET",
+        },
+        {
+          "uprn" => "1000000003",
+          "parent_uprn" => "",
+          "full_address" => "124 Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "124 TEST STREET",
+        },
+      ]
+    end
+    let(:potential_matches_with_count_tokens_matches) do
+      [
+        {
+          "uprn" => "1000000001",
+          "parent_uprn" => "1000000002",
+          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "123 FLAT 2 TEST STREET",
+          "count_tokens_matches_1" => 5,
+        },
+        {
+          "uprn" => "1000000002",
+          "parent_uprn" => "",
+          "full_address" => "123 Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "123 TEST STREET",
+          "count_tokens_matches_1" => 3,
+        },
+        {
+          "uprn" => "1000000003",
+          "parent_uprn" => "",
+          "full_address" => "124 Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "124 TEST STREET",
+          "count_tokens_matches_1" => 2,
+        },
+      ]
+    end
+
+    it "returns the number of tokens in the extracted building numbers" do
+      expect(potential_matches_helper.add_tokens_matches_1(input:, potential_matches:)).to eq potential_matches_with_count_tokens_matches
     end
   end
 end
