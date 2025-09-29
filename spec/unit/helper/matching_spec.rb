@@ -70,41 +70,54 @@ describe Helper::Matching, type: :helper do
     end
   end
 
-  # fn_NumTokensMatched
-  # sets TokensMatched1
   describe "#count_tokens_matching" do
-    context "when the inputs are identical" do
-      let(:identical_strings) { "FLAT 43 1A FAKE STREET" }
+    # fn_NumTokensMatched
+    # sets TokensMatched1
+    context "when comparing the input string to a potential match" do
+      context "when the inputs are identical" do
+        let(:identical_strings) { "FLAT 43 1A FAKE STREET" }
 
-      it "returns the correct number of tokens that match" do
-        expect(described_class.count_tokens_matching(string_1: identical_strings, string_2: identical_strings)).to eq(5)
+        it "returns the correct number of tokens that match" do
+          expect(described_class.count_tokens_matching(string_1: identical_strings, string_2: identical_strings)).to eq(5)
+        end
+      end
+
+      context "when there are additional words in the potential match" do
+        let(:input) { "FLAT 43 1A FAKE STREET" }
+        let(:potential_match) { "FLAT 43 BUILDING 1A FAKE STREET" }
+
+        it "returns the correct number of tokens that match" do
+          expect(described_class.count_tokens_matching(string_1: input, string_2: potential_match)).to eq(5)
+        end
+      end
+
+      context "when there are missing words in the potential match" do
+        let(:input) { "FLAT 43 1A FAKE STREET" }
+        let(:potential_match) { " 43 1A FAKE STREET" }
+
+        it "returns the correct number of tokens that match" do
+          expect(described_class.count_tokens_matching(string_1: input, string_2: potential_match)).to eq(4)
+        end
+      end
+
+      context "when there are repeated words in string_1" do
+        let(:input) { "FLAT FLAT 43 1A FAKE STREET" }
+        let(:potential_match) { "FLAT 43 1A FAKE STREET" }
+
+        it "counts the repeated word" do
+          expect(described_class.count_tokens_matching(string_1: input, string_2: potential_match)).to eq(6)
+        end
       end
     end
 
-    context "when there are additional words in the potential match" do
-      let(:input) { "FLAT 43 1A FAKE STREET" }
-      let(:potential_match) { "FLAT 43 BUILDING 1A FAKE STREET" }
+    context "when comparing the potential match to an input string" do
+      context "when there are repeated words in the string_2" do
+        let(:input) { "FLAT FLAT 43 1A FAKE STREET" }
+        let(:potential_match) { "FLAT 43 1A FAKE STREET" }
 
-      it "returns the correct number of tokens that match" do
-        expect(described_class.count_tokens_matching(string_1: input, string_2: potential_match)).to eq(5)
-      end
-    end
-
-    context "when there are missing words in the potential match" do
-      let(:input) { "FLAT 43 1A FAKE STREET" }
-      let(:potential_match) { " 43 1A FAKE STREET" }
-
-      it "returns the correct number of tokens that match" do
-        expect(described_class.count_tokens_matching(string_1: input, string_2: potential_match)).to eq(4)
-      end
-    end
-
-    context "when there are repeated words in the potential match" do
-      let(:input) { "FLAT FLAT 43 1A FAKE STREET" }
-      let(:potential_match) { "FLAT 43 1A FAKE STREET" }
-
-      it "counts the repeated word" do
-        expect(described_class.count_tokens_matching(string_1: input, string_2: potential_match)).to eq(6)
+        it "counts the repeated word" do
+          expect(described_class.count_tokens_matching(string_1: potential_match, string_2: input)).to eq(5)
+        end
       end
     end
   end

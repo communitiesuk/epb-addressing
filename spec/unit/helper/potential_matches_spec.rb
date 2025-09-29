@@ -764,4 +764,66 @@ describe Helper::PotentialMatches, type: :helper do
       expect(potential_matches_helper.add_tokens_matches_1(input:, potential_matches:)).to eq potential_matches_with_count_tokens_matches
     end
   end
+
+  # TokensMatched2
+  describe "#add_token_matches_2" do
+    let(:input) { "123 FLAT 2 TEST STREET GREATER MANCHESTER" }
+    let(:potential_matches) do
+      [
+        {
+          "uprn" => "1000000001",
+          "parent_uprn" => "1000000002",
+          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "123 FLAT 2 TEST STREET",
+        },
+        {
+          "uprn" => "1000000002",
+          "parent_uprn" => "",
+          "full_address" => "123 Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "123 TEST STREET",
+        },
+        {
+          "uprn" => "1000000003",
+          "parent_uprn" => "",
+          "full_address" => "124 Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "124 TEST STREET",
+        },
+      ]
+    end
+    let(:potential_matches_with_count_tokens_matches) do
+      [
+        {
+          "uprn" => "1000000001",
+          "parent_uprn" => "1000000002",
+          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "123 FLAT 2 TEST STREET",
+          "count_tokens_matches_2" => 5,
+        },
+        {
+          "uprn" => "1000000002",
+          "parent_uprn" => "",
+          "full_address" => "123 Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "123 TEST STREET",
+          "count_tokens_matches_2" => 3,
+        },
+        {
+          "uprn" => "1000000003",
+          "parent_uprn" => "",
+          "full_address" => "124 Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "clean_address" => "124 TEST STREET",
+          "count_tokens_matches_2" => 2,
+        },
+      ]
+    end
+
+    it "returns the number of tokens in the extracted building numbers" do
+      expect(potential_matches_helper.add_tokens_matches_2(input:, potential_matches:)).to eq potential_matches_with_count_tokens_matches
+    end
+  end
 end
