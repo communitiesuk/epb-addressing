@@ -11,7 +11,7 @@ describe UseCase::MatchAddress do
 
   describe "#execute" do
     let(:address) do
-      "1 - 171 LESS CLOSE; 1 - 129 LILY ROAD; AND 27 - 71, COLET PARK, HUMMINGCITY"
+      "FLAT 1-2, BUILDING 2, 23 COLET PARK, HUMMING CITY"
     end
 
     let(:postcode) do
@@ -23,19 +23,19 @@ describe UseCase::MatchAddress do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "2000000001",
-          "full_address" => "Some address with parent",
+          "full_address" => "FLAT 1-2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
           "postcode" => postcode,
         },
         {
           "uprn" => "1000000002",
           "parent_uprn" => "",
-          "full_address" => "Some other address",
+          "full_address" => "FLAT 1, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
           "postcode" => postcode,
         },
         {
           "uprn" => "1000000003",
           "parent_uprn" => nil,
-          "full_address" => "Some other address with nil parent_uprn",
+          "full_address" => "FLAT 2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
           "postcode" => postcode,
         },
       ]
@@ -46,7 +46,7 @@ describe UseCase::MatchAddress do
         {
           "uprn" => "2000000001",
           "parent_uprn" => nil,
-          "full_address" => "Parent address",
+          "full_address" => "BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
           "postcode" => postcode,
         },
       ]
@@ -57,27 +57,39 @@ describe UseCase::MatchAddress do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "2000000001",
-          "full_address" => "Some address with parent",
+          "full_address" => "FLAT 1-2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
           "postcode" => postcode,
+          "clean_address" => "FLAT 1 2 BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
+          "building_tokens" => 4,
+          "count_building_num_intersect" => 4,
         },
         {
           "uprn" => "1000000002",
           "parent_uprn" => "",
-          "full_address" => "Some other address",
+          "full_address" => "FLAT 1, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
           "postcode" => postcode,
+          "clean_address" => "FLAT 1 BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
+          "building_tokens" => 3,
+          "count_building_num_intersect" => 3,
         },
         {
           "uprn" => "1000000003",
           "parent_uprn" => nil,
-          "full_address" => "Some other address with nil parent_uprn",
+          "full_address" => "FLAT 2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
           "postcode" => postcode,
+          "clean_address" => "FLAT 2 BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
+          "building_tokens" => 3,
+          "count_building_num_intersect" => 3,
         },
         {
           "uprn" => "2000000001",
           "parent_uprn" => nil,
-          "full_address" => "Parent address",
+          "full_address" => "BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
           "postcode" => postcode,
           "is_parent" => 1,
+          "clean_address" => "BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
+          "building_tokens" => 2,
+          "count_building_num_intersect" => 2,
         },
       ]
     end
@@ -90,7 +102,7 @@ describe UseCase::MatchAddress do
 
     context "when calling the FindMatches use case" do
       it "extracts the building numbers before calling the use case" do
-        expect(find_matches_use_case).to have_received(:execute).with(building_numbers: "1 171 1 129 27 71", postcode: anything)
+        expect(find_matches_use_case).to have_received(:execute).with(building_numbers: "1 2 2 23", postcode: anything)
       end
 
       it "passes the postcode to the use case" do
