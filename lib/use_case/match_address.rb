@@ -31,8 +31,10 @@ module UseCase
 
       # Step 1 - find out how many intersecting tokens there are and only return the ones with the most matches
 
-      # Set eq. TokensIntersect
+      # eq. @SearchString and CleanAddress1
       clean_address = Helper::Address.clean_address_string("#{address}, #{postcode}")
+
+      # Set eq. TokensIntersect
       Helper::PotentialMatches.add_tokens_intersect(input: clean_address, potential_matches:)
 
       # Retain only the matches with most matching tokens in the address
@@ -45,6 +47,13 @@ module UseCase
 
       # NumMatchesStage1 will need to be created and tested at some stage
       # num_match_stage_1 = potential_matches.length
+
+      # Step 2
+      # Calculate the number of tokens in the clean input which are also in each potential match
+      # Set eq. TokensMatched1
+      Helper::PotentialMatches.add_tokens_matches_1(input: clean_address, potential_matches:)
+
+      # Retain only the matches when comparing count_tokens_matches_1
 
       potential_matches
     end

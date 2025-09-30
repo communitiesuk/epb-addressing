@@ -70,6 +70,7 @@ describe UseCase::MatchAddress do
           "count_building_num_intersect" => 4,
           "count_tokens_intersect" => 12,
           "building_number_exact" => 1,
+          "count_tokens_matches_1" => 12,
         },
       ]
     end
@@ -106,7 +107,7 @@ describe UseCase::MatchAddress do
 
     context "when the input does not have a building number" do
       let(:address) do
-        "FLAT TWO, THIRD BUILDING, COLET PARK, HUMMING CITY"
+        "FOUR-FIVE FLAT TWO, THIRD BUILDING, FIVE COLET PARK, HUMMING CITY"
       end
 
       let(:postcode) do
@@ -118,13 +119,13 @@ describe UseCase::MatchAddress do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "",
-            "full_address" => "FLAT TWO, THIRD BUILDING, COLET PARK, HUMMING CITY, H14 9YA",
+            "full_address" => "FIVE FLAT TWO, THIRD BUILDING, COLET PARK, HUMMING CITY, H14 9YA",
             "postcode" => postcode,
           },
           {
             "uprn" => "1000000011",
             "parent_uprn" => "",
-            "full_address" => "THIRD FLAT, THIRD BUILDING TWO, COLET PARK, HUMMING CITY, H14 9YA",
+            "full_address" => "FOUR THIRD FLAT, THIRD BUILDING TWO, COLET PARK, HUMMING CITY, H14 9YA",
             "postcode" => postcode,
           },
         ]
@@ -135,22 +136,24 @@ describe UseCase::MatchAddress do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "",
-            "full_address" => "FLAT TWO, THIRD BUILDING, COLET PARK, HUMMING CITY, H14 9YA",
+            "full_address" => "FIVE FLAT TWO, THIRD BUILDING, COLET PARK, HUMMING CITY, H14 9YA",
             "postcode" => postcode,
-            "clean_address" => "FLAT TWO THIRD BUILDING COLET PARK HUMMING CITY H14 9YA",
+            "clean_address" => "FIVE FLAT TWO THIRD BUILDING COLET PARK HUMMING CITY H14 9YA",
             "building_tokens" => 0,
             "count_building_num_intersect" => 0,
-            "count_tokens_intersect" => 10,
+            "count_tokens_intersect" => 11,
+            "count_tokens_matches_1" => 12,
           },
           {
             "uprn" => "1000000011",
             "parent_uprn" => "",
-            "full_address" => "THIRD FLAT, THIRD BUILDING TWO, COLET PARK, HUMMING CITY, H14 9YA",
+            "full_address" => "FOUR THIRD FLAT, THIRD BUILDING TWO, COLET PARK, HUMMING CITY, H14 9YA",
             "postcode" => postcode,
-            "clean_address" => "THIRD FLAT THIRD BUILDING TWO COLET PARK HUMMING CITY H14 9YA",
+            "clean_address" => "FOUR THIRD FLAT THIRD BUILDING TWO COLET PARK HUMMING CITY H14 9YA",
             "building_tokens" => 0,
             "count_building_num_intersect" => 0,
-            "count_tokens_intersect" => 10,
+            "count_tokens_intersect" => 11,
+            "count_tokens_matches_1" => 11,
           },
         ]
       end
@@ -214,6 +217,7 @@ describe UseCase::MatchAddress do
             "building_tokens" => 4,
             "count_building_num_intersect" => 1,
             "count_tokens_intersect" => 9,
+            "count_tokens_matches_1" => 9,
           },
           {
             "uprn" => "1000000002",
@@ -224,6 +228,7 @@ describe UseCase::MatchAddress do
             "building_tokens" => 3,
             "count_building_num_intersect" => 1,
             "count_tokens_intersect" => 9,
+            "count_tokens_matches_1" => 9,
           },
           {
             "uprn" => "1000000003",
@@ -234,6 +239,7 @@ describe UseCase::MatchAddress do
             "building_tokens" => 3,
             "count_building_num_intersect" => 1,
             "count_tokens_intersect" => 9,
+            "count_tokens_matches_1" => 9,
           },
           {
             "uprn" => "2000000001",
@@ -244,6 +250,7 @@ describe UseCase::MatchAddress do
             "building_tokens" => 2,
             "count_building_num_intersect" => 1,
             "count_tokens_intersect" => 9,
+            "count_tokens_matches_1" => 9,
             "is_parent" => 1,
           },
         ]
