@@ -30,6 +30,10 @@ module UseCase
       Helper::PotentialMatches.add_count_building_num_intersect(extracted_building_number: building_numbers, potential_matches:)
 
       # Step 1 - find out how many intersecting tokens there are and only return the ones with the most matches
+
+      # Set eq. TokensIntersect
+      clean_address = Helper::Address.clean_address_string("#{address}, #{postcode}")
+      Helper::PotentialMatches.add_tokens_intersect(input: clean_address, potential_matches:)
       potential_matches
     end
   end

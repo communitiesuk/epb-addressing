@@ -27,6 +27,12 @@ describe UseCase::MatchAddress do
           "postcode" => postcode,
         },
         {
+          "uprn" => "1000000011",
+          "parent_uprn" => "2000000001",
+          "full_address" => "FLAT 2-2, BUILDING 1, 23 COLET PARK, HUMMING CITY, H14 9YA",
+          "postcode" => postcode,
+        },
+        {
           "uprn" => "1000000002",
           "parent_uprn" => "",
           "full_address" => "FLAT 1, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
@@ -62,6 +68,17 @@ describe UseCase::MatchAddress do
           "clean_address" => "FLAT 1 2 BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
           "building_tokens" => 4,
           "count_building_num_intersect" => 4,
+          "count_tokens_intersect" => 12,
+        },
+        {
+          "uprn" => "1000000011",
+          "parent_uprn" => "2000000001",
+          "full_address" => "FLAT 2-2, BUILDING 1, 23 COLET PARK, HUMMING CITY, H14 9YA",
+          "postcode" => "H14 9YA",
+          "clean_address" => "FLAT 2 2 BUILDING 1 23 COLET PARK HUMMING CITY H14 9YA",
+          "building_tokens" => 4,
+          "count_building_num_intersect" => 4,
+          "count_tokens_intersect" => 12,
         },
         {
           "uprn" => "1000000002",
@@ -71,6 +88,7 @@ describe UseCase::MatchAddress do
           "clean_address" => "FLAT 1 BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
           "building_tokens" => 3,
           "count_building_num_intersect" => 3,
+          "count_tokens_intersect" => 11,
         },
         {
           "uprn" => "1000000003",
@@ -80,6 +98,7 @@ describe UseCase::MatchAddress do
           "clean_address" => "FLAT 2 BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
           "building_tokens" => 3,
           "count_building_num_intersect" => 3,
+          "count_tokens_intersect" => 11,
         },
         {
           "uprn" => "2000000001",
@@ -90,6 +109,7 @@ describe UseCase::MatchAddress do
           "clean_address" => "BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
           "building_tokens" => 2,
           "count_building_num_intersect" => 2,
+          "count_tokens_intersect" => 9,
         },
       ]
     end
@@ -112,7 +132,7 @@ describe UseCase::MatchAddress do
 
     context "when calling the FindParents use case" do
       it "extracts the parent uprns from the FindMatches result" do
-        expect(find_parents_use_case).to have_received(:execute).with(uprns: %w[2000000001])
+        expect(find_parents_use_case).to have_received(:execute).with(uprns: %w[2000000001 2000000001])
       end
     end
 
