@@ -134,7 +134,7 @@ module Helper
     end
 
     def self.calculate_tokens(clean_string)
-      clean_string.count(" ") + 1
+      clean_string.split(" ").length
     end
   end
 end

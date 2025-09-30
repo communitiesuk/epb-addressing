@@ -80,5 +80,9 @@ describe Helper::Address, type: :helper do
     it "calculates the number of tokens on a clean address string" do
       expect(described_class.calculate_tokens("123 FAKE LANE A12 B13")).to eq 5
     end
+
+    it "returns 0 for an empty string" do
+      expect(described_class.calculate_tokens("")).to eq 0
+    end
   end
 end

@@ -53,6 +53,7 @@ module Helper
       potential_matches.count { |potential_match| (Helper::BuildingNumber.extract_building_numbers(potential_match["clean_address"]) == extracted_building_number) && potential_match["is_parent"] != 1 }
     end
 
+    # We might not use this
     def self.remove_parents(potential_matches:)
       potential_matches.reject! { |potential_match| (potential_match["is_parent"] == 1) }
       potential_matches

@@ -69,16 +69,7 @@ describe UseCase::MatchAddress do
           "building_tokens" => 4,
           "count_building_num_intersect" => 4,
           "count_tokens_intersect" => 12,
-        },
-        {
-          "uprn" => "1000000011",
-          "parent_uprn" => "2000000001",
-          "full_address" => "FLAT 2-2, BUILDING 1, 23 COLET PARK, HUMMING CITY, H14 9YA",
-          "postcode" => "H14 9YA",
-          "clean_address" => "FLAT 2 2 BUILDING 1 23 COLET PARK HUMMING CITY H14 9YA",
-          "building_tokens" => 4,
-          "count_building_num_intersect" => 4,
-          "count_tokens_intersect" => 12,
+          "building_number_exact" => 1,
         },
       ]
     end
@@ -107,6 +98,62 @@ describe UseCase::MatchAddress do
 
     context "when doing a successful search" do
       it "returns the expected result" do
+        expect(find_matches_result).to eq(expected_result)
+      end
+    end
+
+    context "when the input does not have a building number" do
+      let(:address) do
+        "FLAT TWO, THIRD BUILDING, COLET PARK, HUMMING CITY"
+      end
+
+      let(:postcode) do
+        "H14 9YA"
+      end
+
+      let(:find_matches_result) do
+        [
+          {
+            "uprn" => "1000000001",
+            "parent_uprn" => "",
+            "full_address" => "FLAT TWO, THIRD BUILDING, COLET PARK, HUMMING CITY, H14 9YA",
+            "postcode" => postcode,
+          },
+          {
+            "uprn" => "1000000011",
+            "parent_uprn" => "",
+            "full_address" => "THIRD FLAT, THIRD BUILDING TWO, COLET PARK, HUMMING CITY, H14 9YA",
+            "postcode" => postcode,
+          },
+        ]
+      end
+
+      let(:expected_result) do
+        [
+          {
+            "uprn" => "1000000001",
+            "parent_uprn" => "",
+            "full_address" => "FLAT TWO, THIRD BUILDING, COLET PARK, HUMMING CITY, H14 9YA",
+            "postcode" => postcode,
+            "clean_address" => "FLAT TWO THIRD BUILDING COLET PARK HUMMING CITY H14 9YA",
+            "building_tokens" => 0,
+            "count_building_num_intersect" => 0,
+            "count_tokens_intersect" => 10,
+          },
+          {
+            "uprn" => "1000000011",
+            "parent_uprn" => "",
+            "full_address" => "THIRD FLAT, THIRD BUILDING TWO, COLET PARK, HUMMING CITY, H14 9YA",
+            "postcode" => postcode,
+            "clean_address" => "THIRD FLAT THIRD BUILDING TWO COLET PARK HUMMING CITY H14 9YA",
+            "building_tokens" => 0,
+            "count_building_num_intersect" => 0,
+            "count_tokens_intersect" => 10,
+          },
+        ]
+      end
+
+      it "returns the expected result not setting building_number_exact" do
         expect(find_matches_result).to eq(expected_result)
       end
     end

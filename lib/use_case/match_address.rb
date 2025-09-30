@@ -38,6 +38,14 @@ module UseCase
       # Retain only the matches with most matching tokens in the address
       Helper::PotentialMatches.remove_matches(potential_matches:, attribute_name: "count_tokens_intersect")
 
+      # Check if any of the matches have the same extracted building numbers only if we have a building number
+      if !building_numbers.empty? && Helper::PotentialMatches.count_exact_numbers_and_not_parents(extracted_building_number: building_numbers, potential_matches:).positive?
+        Helper::PotentialMatches.remove_non_exact_numbers(extracted_building_number: building_numbers, potential_matches:)
+      end
+
+      # NumMatchesStage1 will need to be created and tested at some stage
+      # num_match_stage_1 = potential_matches.length
+
       potential_matches
     end
   end
