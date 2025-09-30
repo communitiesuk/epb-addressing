@@ -71,6 +71,9 @@ describe UseCase::MatchAddress do
           "count_tokens_intersect" => 12,
           "building_number_exact" => 1,
           "count_tokens_matches_1" => 12,
+          "count_tokens_matches_2" => 12,
+          "tokens_out" => 12,
+          "percentage_match" => 1.0,
         },
       ]
     end
@@ -143,6 +146,9 @@ describe UseCase::MatchAddress do
             "count_building_num_intersect" => 0,
             "count_tokens_intersect" => 11,
             "count_tokens_matches_1" => 12,
+            "count_tokens_matches_2" => 11,
+            "tokens_out" => 11,
+            "percentage_match" => 1.0,
           },
         ]
       end
@@ -207,6 +213,9 @@ describe UseCase::MatchAddress do
             "count_building_num_intersect" => 1,
             "count_tokens_intersect" => 9,
             "count_tokens_matches_1" => 9,
+            "count_tokens_matches_2" => 10,
+            "tokens_out" => 12,
+            "percentage_match" => 0.8333333333333334,
           },
           {
             "uprn" => "1000000002",
@@ -218,6 +227,9 @@ describe UseCase::MatchAddress do
             "count_building_num_intersect" => 1,
             "count_tokens_intersect" => 9,
             "count_tokens_matches_1" => 9,
+            "count_tokens_matches_2" => 9,
+            "tokens_out" => 11,
+            "percentage_match" => 0.8181818181818182,
           },
           {
             "uprn" => "1000000003",
@@ -229,6 +241,9 @@ describe UseCase::MatchAddress do
             "count_building_num_intersect" => 1,
             "count_tokens_intersect" => 9,
             "count_tokens_matches_1" => 9,
+            "count_tokens_matches_2" => 10,
+            "tokens_out" => 11,
+            "percentage_match" => 0.9090909090909091,
           },
           {
             "uprn" => "2000000001",
@@ -241,6 +256,9 @@ describe UseCase::MatchAddress do
             "count_tokens_intersect" => 9,
             "count_tokens_matches_1" => 9,
             "is_parent" => 1,
+            "count_tokens_matches_2" => 9,
+            "tokens_out" => 10,
+            "percentage_match" => 0.9,
           },
         ]
       end

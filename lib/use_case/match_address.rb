@@ -56,6 +56,18 @@ module UseCase
       # Retain only the matches when comparing count_tokens_matches_1
       Helper::PotentialMatches.remove_matches(potential_matches:, attribute_name: "count_tokens_matches_1")
 
+      # Step 3
+      # Calculate the number of tokens in each potential match which are also in the clean input
+      # Set eq. TokensMatched2
+      Helper::PotentialMatches.add_tokens_matches_2(input: clean_address, potential_matches:)
+
+      # Calculate tokens_out
+      # Set eq. TokensOut
+      Helper::PotentialMatches.add_tokens_out(potential_matches:)
+
+      # Calculate percentage of matching tokens for count_tokens_matches_2
+      Helper::PotentialMatches.add_percentage_match(potential_matches:)
+
       potential_matches
     end
   end
