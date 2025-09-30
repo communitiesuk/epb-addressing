@@ -540,6 +540,58 @@ describe Helper::PotentialMatches, type: :helper do
         end
       end
     end
+
+    context "when the attribute name is percentage_match" do
+      context "when the values are floats and the max is not the first in the list" do
+        let(:attribute_name) { "percentage_match" }
+
+        let(:potential_matches) do
+          [
+            {
+              "uprn" => "1000000002",
+              "parent_uprn" => "",
+              "full_address" => "2 Test Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "2 TEST STREET",
+              "percentage_match" => 0.8181818181818182,
+            },
+            {
+              "uprn" => "1000000001",
+              "parent_uprn" => "1000000002",
+              "full_address" => "1, Test Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "1 TEST STREET",
+              "percentage_match" => 0.9090909090909091,
+            },
+            {
+              "uprn" => "1000000003",
+              "parent_uprn" => "",
+              "full_address" => "3 Test Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "3 TEST STREET",
+              "percentage_match" => 0.9,
+            },
+          ]
+        end
+
+        let(:potential_matches_with_highest_percentage_match) do
+          [
+            {
+              "uprn" => "1000000001",
+              "parent_uprn" => "1000000002",
+              "full_address" => "1, Test Street, Greater Manchester",
+              "postcode" => "IP25 6RE",
+              "clean_address" => "1 TEST STREET",
+              "percentage_match" => 0.9090909090909091,
+            },
+          ]
+        end
+
+        it "returns the potential_matches with the most matches" do
+          expect(potential_matches_helper.remove_matches(potential_matches:, attribute_name:)).to eq potential_matches_with_highest_percentage_match
+        end
+      end
+    end
   end
 
   # this is when there are building numbers

@@ -65,9 +65,11 @@ module UseCase
       # Set eq. TokensOut
       Helper::PotentialMatches.add_tokens_out(potential_matches:)
 
-      # Calculate percentage of matching tokens for count_tokens_matches_2
+      # Calculate percentage_match based on count_tokens_matches_2
       Helper::PotentialMatches.add_percentage_match(potential_matches:)
 
+      # Retain only the matches with the highest percentage_match
+      Helper::PotentialMatches.remove_matches(potential_matches:, attribute_name: "percentage_match")
       potential_matches
     end
   end
