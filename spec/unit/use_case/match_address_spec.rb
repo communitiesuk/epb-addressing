@@ -80,37 +80,6 @@ describe UseCase::MatchAddress do
           "count_building_num_intersect" => 4,
           "count_tokens_intersect" => 12,
         },
-        {
-          "uprn" => "1000000002",
-          "parent_uprn" => "",
-          "full_address" => "FLAT 1, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
-          "postcode" => postcode,
-          "clean_address" => "FLAT 1 BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
-          "building_tokens" => 3,
-          "count_building_num_intersect" => 3,
-          "count_tokens_intersect" => 11,
-        },
-        {
-          "uprn" => "1000000003",
-          "parent_uprn" => nil,
-          "full_address" => "FLAT 2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
-          "postcode" => postcode,
-          "clean_address" => "FLAT 2 BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
-          "building_tokens" => 3,
-          "count_building_num_intersect" => 3,
-          "count_tokens_intersect" => 11,
-        },
-        {
-          "uprn" => "2000000001",
-          "parent_uprn" => nil,
-          "full_address" => "BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
-          "postcode" => postcode,
-          "is_parent" => 1,
-          "clean_address" => "BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
-          "building_tokens" => 2,
-          "count_building_num_intersect" => 2,
-          "count_tokens_intersect" => 9,
-        },
       ]
     end
 

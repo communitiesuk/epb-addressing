@@ -34,6 +34,10 @@ module UseCase
       # Set eq. TokensIntersect
       clean_address = Helper::Address.clean_address_string("#{address}, #{postcode}")
       Helper::PotentialMatches.add_tokens_intersect(input: clean_address, potential_matches:)
+
+      # Retain only the matches with most matching tokens in the address
+      Helper::PotentialMatches.remove_matches(potential_matches:, attribute_name: "count_tokens_intersect")
+
       potential_matches
     end
   end
