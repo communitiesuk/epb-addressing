@@ -105,7 +105,7 @@ describe UseCase::MatchAddress do
       end
     end
 
-    context "when the input does not have a building number" do
+    context "when the input does not have a building number and has repeated tokens" do
       let(:address) do
         "FOUR-FIVE FLAT TWO, THIRD BUILDING, FIVE COLET PARK, HUMMING CITY"
       end
@@ -143,17 +143,6 @@ describe UseCase::MatchAddress do
             "count_building_num_intersect" => 0,
             "count_tokens_intersect" => 11,
             "count_tokens_matches_1" => 12,
-          },
-          {
-            "uprn" => "1000000011",
-            "parent_uprn" => "",
-            "full_address" => "FOUR THIRD FLAT, THIRD BUILDING TWO, COLET PARK, HUMMING CITY, H14 9YA",
-            "postcode" => postcode,
-            "clean_address" => "FOUR THIRD FLAT THIRD BUILDING TWO COLET PARK HUMMING CITY H14 9YA",
-            "building_tokens" => 0,
-            "count_building_num_intersect" => 0,
-            "count_tokens_intersect" => 11,
-            "count_tokens_matches_1" => 11,
           },
         ]
       end

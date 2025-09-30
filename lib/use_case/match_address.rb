@@ -54,6 +54,7 @@ module UseCase
       Helper::PotentialMatches.add_tokens_matches_1(input: clean_address, potential_matches:)
 
       # Retain only the matches when comparing count_tokens_matches_1
+      Helper::PotentialMatches.remove_matches(potential_matches:, attribute_name: "count_tokens_matches_1")
 
       potential_matches
     end
