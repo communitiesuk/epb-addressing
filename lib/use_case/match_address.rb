@@ -17,8 +17,8 @@ module UseCase
       parents = @find_parents_use_case.execute(uprns: parent_uprns)
       Helper::PotentialMatches.merge_parents(potential_matches:, parents:)
 
-      # NumMatchesStage0 will need to be created and tested at some stage
-      # num_match_stage_0 = potential_matches.length
+      # Set eq. NumMatchesStage0
+      num_matches_stage_0 = potential_matches.length
 
       # Set clean address eq. CleanAddress2 for each row
       Helper::PotentialMatches.add_clean_address(potential_matches:)
@@ -45,8 +45,8 @@ module UseCase
         Helper::PotentialMatches.remove_non_exact_numbers(extracted_building_number: building_numbers, potential_matches:)
       end
 
-      # NumMatchesStage1 will need to be created and tested at some stage
-      # num_match_stage_1 = potential_matches.length
+      # Set eq. NumMatchesStage1
+      num_matches_stage_1 = potential_matches.length
 
       # Step 2
       # Calculate the number of tokens in the clean input which are also in each potential match
@@ -74,12 +74,48 @@ module UseCase
       # If there are non-parent matches, discard the parent matches
       Helper::PotentialMatches.cleanup_parents(potential_matches:)
 
-      # FoundCount will need to be created and tested at some stage
-      # found_count = potential_matches.length
+      # Set eq. FoundCount
+      found_count = potential_matches.length
 
       # Check if any of the potential matches is an exact match
       # Set eq. IsExactMatch
       Helper::PotentialMatches.add_is_exact_match(input: clean_address, potential_matches:)
+
+      # Additional values needed for Confidence calculation
+
+      # Set eq. TokensIn
+      tokens_in = Helper::Address.calculate_tokens(clean_address)
+      # Set eq. of @BuildingNumFound
+      building_number_found = !building_numbers.empty? ? 1 : 0
+      # Set eq. LenBuildingNum1, doesn't need to go on each match
+      building_number_tokens = Helper::Address.calculate_tokens(building_numbers)
+      # Set eq. @bin1
+      # SQL equivalent checks if num_matches_stage_1 is 1
+      # The algorithm document says we should check if num_matches_stage_1 is greater than 1
+      bin_matches_stage_1 = num_matches_stage_1 == 1 ? 1 : 0
+
+      # Calculate percentage of intersecting building numbers
+      # Set eq. @percentNum1
+      percent_num_1 = 1.0
+
+      unless building_numbers.empty?
+        # SQL equivalent uses a non-deterministic way of picking the following value,
+        # we do think @percentNum1 should be calculated per potential match.
+        potential_matches[0]["count_building_num_intersect"] / # eq. LenBuildingNumIntersect
+          building_number_tokens.to_f
+      end
+
+      # Calculate confidence
+      Helper::PotentialMatches.add_confidence(
+        potential_matches:,
+        tokens_in:,
+        building_number_found:,
+        building_number_tokens:,
+        percent_num_1:,
+        bin_matches_stage_1:,
+        num_matches_stage_0:,
+        found_count:,
+      )
       potential_matches
     end
   end

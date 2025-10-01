@@ -1152,4 +1152,64 @@ describe Helper::PotentialMatches, type: :helper do
       end
     end
   end
+
+  describe "#add_confidence" do
+    let(:potential_matches) do
+      [
+        {
+          "uprn" => "1000000001",
+          "parent_uprn" => "2000000001",
+          "full_address" => "FLAT 1-2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
+          "postcode" => "H14 9YA",
+          "clean_address" => "FLAT 1 2 BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
+          "building_tokens" => 4,
+          "count_building_num_intersect" => 4,
+          "count_tokens_intersect" => 12,
+          "building_number_exact" => 1,
+          "count_tokens_matches_1" => 12,
+          "count_tokens_matches_2" => 12,
+          "tokens_out" => 12,
+          "percentage_match" => 1.0,
+          "is_exact_match" => 1,
+        },
+      ]
+    end
+
+    let(:expected_result) do
+      [
+        {
+          "uprn" => "1000000001",
+          "parent_uprn" => "2000000001",
+          "full_address" => "FLAT 1-2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
+          "postcode" => "H14 9YA",
+          "clean_address" => "FLAT 1 2 BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
+          "building_tokens" => 4,
+          "count_building_num_intersect" => 4,
+          "count_tokens_intersect" => 12,
+          "building_number_exact" => 1,
+          "count_tokens_matches_1" => 12,
+          "count_tokens_matches_2" => 12,
+          "tokens_out" => 12,
+          "percentage_match" => 1.0,
+          "is_exact_match" => 1,
+          "confidence" => 99.30727799305609,
+        },
+      ]
+    end
+
+    context "when we calculate the confidence for each potential match in step 3" do
+      it "adds confidence attribute to the potential matches" do
+        expect(potential_matches_helper.add_confidence(
+                 potential_matches:,
+                 tokens_in: 12,
+                 building_number_found: 1,
+                 building_number_tokens: 4,
+                 percent_num_1: 0.6,
+                 bin_matches_stage_1: 1,
+                 num_matches_stage_0: 4,
+                 found_count: 1,
+               )).to eq expected_result
+      end
+    end
+  end
 end

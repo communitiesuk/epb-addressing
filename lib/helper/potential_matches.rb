@@ -101,5 +101,33 @@ module Helper
         end
       end
     end
+
+    def self.add_confidence(potential_matches:, tokens_in:, building_number_found:, building_number_tokens:, percent_num_1:, bin_matches_stage_1:, num_matches_stage_0:, found_count:)
+      potential_matches.each do |potential_match|
+        z =
+          -13.0343033 +
+          4.56617636 * percent_num_1 +
+          5.69875062 * potential_match["count_tokens_matches_1"].to_f / tokens_in.to_f +
+          1.70818323 * bin_matches_stage_1 +
+          3.73172005 * potential_match["count_tokens_matches_2"].to_f / potential_match["tokens_out"].to_f +
+          2.18266788 * building_number_found +
+          2.08826112 * potential_match["is_exact_match"].to_f +
+          0.46681653 * potential_match["count_tokens_intersect"] +
+          -1.86369782 * potential_match["building_tokens"] +
+          -1.04432127 * potential_match["is_parent"].to_f +
+          0.82199287 * building_number_tokens +
+          0.73439667 * potential_match["building_number_exact"].to_f +
+          -0.19557523 * potential_match["count_tokens_matches_2"] +
+          0.00697187 * num_matches_stage_0
+
+        # logistic function → scale to percentage
+        confidence = 100.0 / (1.0 + Math.exp(-z))
+
+        # divide by found_count (avoid divide by zero)
+        confidence /= found_count.to_f
+
+        potential_match["confidence"] = confidence
+      end
+    end
   end
 end
