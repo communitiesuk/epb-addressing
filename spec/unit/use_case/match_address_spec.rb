@@ -224,5 +224,60 @@ describe UseCase::MatchAddress do
         expect(use_case.execute(address:, postcode:)).to eq(expected_result)
       end
     end
+
+    context "when there are parents still in the potential matches at stage 3" do
+      let(:address) do
+        "FLAT 1-2 BUILDING 3, 23 COLET PARK, HUMMING CITY"
+      end
+
+      let(:postcode) do
+        "H14 9YA"
+      end
+
+      let(:find_matches_result) do
+        [
+          {
+            "uprn" => "1000000001",
+            "parent_uprn" => "2000000001",
+            "full_address" => "FLAT 1, BUILDING 3, 23 COLET PARK, HUMMING CITY, H14 9YA",
+            "postcode" => postcode,
+          },
+        ]
+      end
+
+      let(:find_parents_result) do
+        [
+          {
+            "uprn" => "2000000001",
+            "parent_uprn" => "",
+            "full_address" => "FLAT 2, BUILDING 3, 23 COLET PARK, HUMMING CITY, H14 9YA",
+            "postcode" => postcode,
+          },
+        ]
+      end
+
+      let(:expected_result) do
+        [
+          {
+            "uprn" => "1000000001",
+            "parent_uprn" => "2000000001",
+            "full_address" => "FLAT 1, BUILDING 3, 23 COLET PARK, HUMMING CITY, H14 9YA",
+            "postcode" => postcode,
+            "clean_address" => "FLAT 1 BUILDING 3 23 COLET PARK HUMMING CITY H14 9YA",
+            "building_tokens" => 3,
+            "count_building_num_intersect" => 3,
+            "count_tokens_intersect" => 11,
+            "count_tokens_matches_1" => 11,
+            "count_tokens_matches_2" => 11,
+            "tokens_out" => 11,
+            "percentage_match" => 1.0,
+          },
+        ]
+      end
+
+      it "removes the parent address" do
+        expect(use_case.execute(address:, postcode:)).to eq(expected_result)
+      end
+    end
   end
 end

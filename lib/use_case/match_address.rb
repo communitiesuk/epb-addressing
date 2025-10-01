@@ -70,6 +70,10 @@ module UseCase
 
       # Retain only the matches with the highest percentage_match
       Helper::PotentialMatches.remove_matches(potential_matches:, attribute_name: "percentage_match")
+
+      # If there are non-parent matches, discard the parent matches
+      Helper::PotentialMatches.cleanup_parents(potential_matches:)
+
       potential_matches
     end
   end
