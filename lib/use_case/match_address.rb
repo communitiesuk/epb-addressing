@@ -74,6 +74,12 @@ module UseCase
       # If there are non-parent matches, discard the parent matches
       Helper::PotentialMatches.cleanup_parents(potential_matches:)
 
+      # FoundCount will need to be created and tested at some stage
+      # found_count = potential_matches.length
+
+      # Check if any of the potential matches is an exact match
+      # Set eq. IsExactMatch
+      Helper::PotentialMatches.add_is_exact_match(input: clean_address, potential_matches:)
       potential_matches
     end
   end

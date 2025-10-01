@@ -74,6 +74,7 @@ describe UseCase::MatchAddress do
           "count_tokens_matches_2" => 12,
           "tokens_out" => 12,
           "percentage_match" => 1.0,
+          "is_exact_match" => 1,
         },
       ]
     end
