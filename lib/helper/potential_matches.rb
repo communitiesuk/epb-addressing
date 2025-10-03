@@ -129,5 +129,10 @@ module Helper
         potential_match["confidence"] = confidence
       end
     end
+
+    def self.remove_by_confidence(potential_matches:, confidence_threshold:)
+      potential_matches.reject! { |potential_match| (potential_match["confidence"] < confidence_threshold) }
+      potential_matches
+    end
   end
 end

@@ -1212,4 +1212,80 @@ describe Helper::PotentialMatches, type: :helper do
       end
     end
   end
+
+  describe "#remove_by_confidence" do
+    let(:potential_matches) do
+      [
+        {
+          "uprn" => "1000000001",
+          "parent_uprn" => "",
+          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "confidence" => 99.120934,
+        },
+        {
+          "uprn" => "1000000002",
+          "parent_uprn" => "",
+          "full_address" => "123 Test Street, Greater Manchester",
+          "postcode" => "IP25 6RE",
+          "confidence" => 48.044934,
+        },
+      ]
+    end
+
+    context "when there are potential matches with a confidence lower than the threshold" do
+      let(:expected_result) do
+        [
+          {
+            "uprn" => "1000000001",
+            "parent_uprn" => "",
+            "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+            "postcode" => "IP25 6RE",
+            "confidence" => 99.120934,
+          },
+        ]
+      end
+
+      let(:confidence_threshold) { 50.0 }
+
+      it "removes those matches" do
+        expect(potential_matches_helper.remove_by_confidence(potential_matches:, confidence_threshold:)).to eq(expected_result)
+      end
+    end
+
+    context "when all the potential matches meet the confidence threshold" do
+      let(:expected_result) do
+        [
+          {
+            "uprn" => "1000000001",
+            "parent_uprn" => "",
+            "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+            "postcode" => "IP25 6RE",
+            "confidence" => 99.120934,
+          },
+          {
+            "uprn" => "1000000002",
+            "parent_uprn" => "",
+            "full_address" => "123 Test Street, Greater Manchester",
+            "postcode" => "IP25 6RE",
+            "confidence" => 48.044934,
+          },
+        ]
+      end
+
+      let(:confidence_threshold) { 40.0 }
+
+      it "does not remove any of the potential matches" do
+        expect(potential_matches_helper.remove_by_confidence(potential_matches:, confidence_threshold:)).to eq(expected_result)
+      end
+    end
+
+    context "when none of the potential matches meet the confidence threshold" do
+      let(:confidence_threshold) { 99.4 }
+
+      it "returns no matches" do
+        expect(potential_matches_helper.remove_by_confidence(potential_matches:, confidence_threshold:)).to eq([])
+      end
+    end
+  end
 end
