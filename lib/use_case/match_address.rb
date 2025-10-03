@@ -8,7 +8,7 @@ module UseCase
       @find_parents_use_case = find_parents_use_case
     end
 
-    def execute(address:, postcode:)
+    def execute(address:, postcode:, confidence_threshold:)
       # Step 0
       building_numbers = Helper::BuildingNumber.extract_building_numbers(address)
       potential_matches = @find_matches_use_case.execute(building_numbers:, postcode:)
@@ -116,6 +116,9 @@ module UseCase
         num_matches_stage_0:,
         found_count:,
       )
+
+      # Remove the potential matches that don't meet the threshold
+      Helper::PotentialMatches.remove_by_confidence(potential_matches:, confidence_threshold:)
       potential_matches
     end
   end

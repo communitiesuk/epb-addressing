@@ -18,6 +18,10 @@ describe UseCase::MatchAddress do
       "H14 9YA"
     end
 
+    let(:confidence_threshold) do
+      90.0
+    end
+
     let(:find_matches_result) do
       [
         {
@@ -58,27 +62,6 @@ describe UseCase::MatchAddress do
       ]
     end
 
-    let(:expected_result_without_confidence) do
-      [
-        {
-          "uprn" => "1000000001",
-          "parent_uprn" => "2000000001",
-          "full_address" => "FLAT 1-2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
-          "postcode" => postcode,
-          "clean_address" => "FLAT 1 2 BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
-          "building_tokens" => 4,
-          "count_building_num_intersect" => 4,
-          "count_tokens_intersect" => 12,
-          "building_number_exact" => 1,
-          "count_tokens_matches_1" => 12,
-          "count_tokens_matches_2" => 12,
-          "tokens_out" => 12,
-          "percentage_match" => 1.0,
-          "is_exact_match" => 1,
-        },
-      ]
-    end
-
     let(:expected_result) do
       [
         {
@@ -108,32 +91,32 @@ describe UseCase::MatchAddress do
 
     context "when calling the FindMatches use case" do
       it "extracts the building numbers before calling the use case" do
-        use_case.execute(address:, postcode:)
+        use_case.execute(address:, postcode:, confidence_threshold:)
         expect(find_matches_use_case).to have_received(:execute).with(building_numbers: "1 2 2 23", postcode: anything)
       end
 
       it "passes the postcode to the use case" do
-        use_case.execute(address:, postcode:)
+        use_case.execute(address:, postcode:, confidence_threshold:)
         expect(find_matches_use_case).to have_received(:execute).with(building_numbers: anything, postcode:)
       end
     end
 
     context "when calling the FindParents use case" do
       it "extracts the parent uprns from the FindMatches result" do
-        use_case.execute(address:, postcode:)
+        use_case.execute(address:, postcode:, confidence_threshold:)
         expect(find_parents_use_case).to have_received(:execute).with(uprns: %w[2000000001 2000000001])
       end
     end
 
     context "when calculating the confidence" do
       before do
-        allow(Helper::PotentialMatches).to receive(:add_confidence)
+        allow(Helper::PotentialMatches).to receive(:add_confidence).and_call_original
       end
 
       it "calls add_confidence with the expected arguments" do
-        use_case.execute(address:, postcode:)
+        use_case.execute(address:, postcode:, confidence_threshold:)
         expect(Helper::PotentialMatches).to have_received(:add_confidence).with(
-          potential_matches: expected_result_without_confidence,
+          potential_matches: expected_result,
           tokens_in: 12,
           building_number_found: 1,
           building_number_tokens: 4,
@@ -147,7 +130,7 @@ describe UseCase::MatchAddress do
 
     context "when we have an exact match" do
       it "returns the expected result" do
-        expect(use_case.execute(address:, postcode:)).to eq(expected_result)
+        expect(use_case.execute(address:, postcode:, confidence_threshold:)).to eq(expected_result)
       end
     end
 
@@ -198,7 +181,7 @@ describe UseCase::MatchAddress do
       end
 
       it "returns the expected result not setting building_number_exact" do
-        expect(use_case.execute(address:, postcode:)).to eq(expected_result)
+        expect(use_case.execute(address:, postcode:, confidence_threshold:)).to eq(expected_result)
       end
     end
 
@@ -245,25 +228,6 @@ describe UseCase::MatchAddress do
         ]
       end
 
-      let(:expected_result_without_confidence) do
-        [
-          {
-            "uprn" => "1000000003",
-            "parent_uprn" => "",
-            "full_address" => "FLAT 2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
-            "postcode" => postcode,
-            "clean_address" => "FLAT 2 BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
-            "building_tokens" => 3,
-            "count_building_num_intersect" => 1,
-            "count_tokens_intersect" => 9,
-            "count_tokens_matches_1" => 9,
-            "count_tokens_matches_2" => 10,
-            "tokens_out" => 11,
-            "percentage_match" => 0.9090909090909091,
-          },
-        ]
-      end
-
       let(:expected_result) do
         [
           {
@@ -285,14 +249,18 @@ describe UseCase::MatchAddress do
       end
 
       it "returns the expected result" do
-        expect(use_case.execute(address:, postcode:)).to eq(expected_result)
+        expect(use_case.execute(address:, postcode:, confidence_threshold: 40)).to eq(expected_result)
+      end
+
+      it "returns no results using 50 as a confidence threshold" do
+        expect(use_case.execute(address:, postcode:, confidence_threshold: 50)).to eq([])
       end
 
       it "calls add_confidence with the expected arguments" do
-        allow(Helper::PotentialMatches).to receive(:add_confidence)
-        use_case.execute(address:, postcode:)
+        allow(Helper::PotentialMatches).to receive(:add_confidence).and_call_original
+        use_case.execute(address:, postcode:, confidence_threshold: 40)
         expect(Helper::PotentialMatches).to have_received(:add_confidence).with(
-          potential_matches: expected_result_without_confidence,
+          potential_matches: expected_result,
           tokens_in: 10,
           building_number_found: 1,
           building_number_tokens: 1,
@@ -356,7 +324,7 @@ describe UseCase::MatchAddress do
       end
 
       it "removes the parent address" do
-        expect(use_case.execute(address:, postcode:)).to eq(expected_result)
+        expect(use_case.execute(address:, postcode:, confidence_threshold:)).to eq(expected_result)
       end
     end
   end
