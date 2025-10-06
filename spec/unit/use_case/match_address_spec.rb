@@ -327,5 +327,18 @@ describe UseCase::MatchAddress do
         expect(use_case.execute(address:, postcode:, confidence_threshold:)).to eq(expected_result)
       end
     end
+
+    context "when there are no results on stage 0" do
+      let(:find_matches_result) { [] }
+      let(:find_parents_result) { [] }
+
+      it "does not raise an error" do
+        expect { use_case.execute(address:, postcode:, confidence_threshold:) }.not_to raise_error
+      end
+
+      it "returns an empty array" do
+        expect(use_case.execute(address:, postcode:, confidence_threshold:)).to eq([])
+      end
+    end
   end
 end

@@ -20,6 +20,10 @@ module UseCase
       # Set eq. NumMatchesStage0
       num_matches_stage_0 = potential_matches.length
 
+      if num_matches_stage_0.zero?
+        return []
+      end
+
       # Set clean address eq. CleanAddress2 for each row
       Helper::PotentialMatches.add_clean_address(potential_matches:)
 
