@@ -1,5 +1,9 @@
+require "epb-auth-tools"
+
 ENV["STAGE"] = "test"
 ENV["RACK_ENV"] = "test"
+ENV["JWT_ISSUER"] = "test.issuer"
+ENV["JWT_SECRET"] = "test.secret"
 
 require "rake"
 require "zeitwerk"
@@ -25,6 +29,18 @@ module RSpecAddressingServiceMixin
   def app
     AddressingService
   end
+end
+
+def get_valid_jwt(scopes = [], sup = {})
+  token =
+    Auth::Token.new(iat: Time.now.to_i,
+                    exp: Time.now.to_i + (60 * 60),
+                    iss: ENV["JWT_ISSUER"],
+                    sub: "test-subject",
+                    scopes:,
+                    sup:)
+
+  token.encode ENV["JWT_SECRET"]
 end
 
 TestLoader.setup
