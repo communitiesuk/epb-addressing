@@ -26,6 +26,14 @@ module Controller
       @json_helper.convert_to_ruby_hash(request.body.read.to_s, schema:)
     end
 
+    def json_api_response(
+      code: 200,
+      data: {}
+    )
+      response_data = { data: }
+      json_response(response_data, code)
+    end
+
     def json_response(object, code = 200)
       content_type :json
       status code

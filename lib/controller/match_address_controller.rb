@@ -26,8 +26,24 @@ module Controller
     }.freeze
 
     post "/match-address" do
-      request_body(POST_SCHEMA)
-      status 200
+      parsed_body = request_body(POST_SCHEMA)
+
+      match_address_use_case = Container.match_address_use_case
+
+      postcode = parsed_body[:postcode]
+
+      address_array = [
+        parsed_body[:address_line_1],
+        parsed_body[:address_line_2],
+        parsed_body[:address_line_3],
+        parsed_body[:address_line_4],
+        parsed_body[:town],
+      ]
+
+      address = address_array.compact.join(", ")
+
+      matches = match_address_use_case.execute(address:, postcode:, confidence_threshold: 50)
+      json_api_response code: 200, data: matches
     rescue Boundary::Json::ValidationError => e
       json_response({ error: e.message }, 400)
     end
