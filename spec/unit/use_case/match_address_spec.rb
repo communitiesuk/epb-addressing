@@ -27,25 +27,25 @@ describe UseCase::MatchAddress do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "2000000001",
-          "full_address" => "FLAT 1-2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
+          "address" => "FLAT 1-2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
           "postcode" => postcode,
         },
         {
           "uprn" => "1000000011",
           "parent_uprn" => "2000000001",
-          "full_address" => "FLAT 2-2, BUILDING 1, 23 COLET PARK, HUMMING CITY, H14 9YA",
+          "address" => "FLAT 2-2, BUILDING 1, 23 COLET PARK, HUMMING CITY, H14 9YA",
           "postcode" => postcode,
         },
         {
           "uprn" => "1000000002",
           "parent_uprn" => "",
-          "full_address" => "FLAT 1, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
+          "address" => "FLAT 1, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
           "postcode" => postcode,
         },
         {
           "uprn" => "1000000003",
           "parent_uprn" => "",
-          "full_address" => "FLAT 2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
+          "address" => "FLAT 2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
           "postcode" => postcode,
         },
       ]
@@ -56,7 +56,7 @@ describe UseCase::MatchAddress do
         {
           "uprn" => "2000000001",
           "parent_uprn" => "",
-          "full_address" => "BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
+          "address" => "BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
           "postcode" => postcode,
         },
       ]
@@ -67,7 +67,7 @@ describe UseCase::MatchAddress do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "2000000001",
-          "full_address" => "FLAT 1-2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
+          "address" => "FLAT 1-2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
           "postcode" => postcode,
           "clean_address" => "FLAT 1 2 BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
           "building_tokens" => 4,
@@ -148,13 +148,13 @@ describe UseCase::MatchAddress do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "",
-            "full_address" => "FIVE FLAT TWO, THIRD BUILDING, COLET PARK, HUMMING CITY, H14 9YA",
+            "address" => "FIVE FLAT TWO, THIRD BUILDING, COLET PARK, HUMMING CITY, H14 9YA",
             "postcode" => postcode,
           },
           {
             "uprn" => "1000000011",
             "parent_uprn" => "",
-            "full_address" => "FOUR THIRD FLAT, THIRD BUILDING TWO, COLET PARK, HUMMING CITY, H14 9YA",
+            "address" => "FOUR THIRD FLAT, THIRD BUILDING TWO, COLET PARK, HUMMING CITY, H14 9YA",
             "postcode" => postcode,
           },
         ]
@@ -165,7 +165,7 @@ describe UseCase::MatchAddress do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "",
-            "full_address" => "FIVE FLAT TWO, THIRD BUILDING, COLET PARK, HUMMING CITY, H14 9YA",
+            "address" => "FIVE FLAT TWO, THIRD BUILDING, COLET PARK, HUMMING CITY, H14 9YA",
             "postcode" => postcode,
             "clean_address" => "FIVE FLAT TWO THIRD BUILDING COLET PARK HUMMING CITY H14 9YA",
             "building_tokens" => 0,
@@ -199,19 +199,19 @@ describe UseCase::MatchAddress do
           {
             "uprn" => "1000000011",
             "parent_uprn" => "2000000001",
-            "full_address" => "FLAT 2-2, BUILDING 1, 23 COLET PARK, HUMMING CITY, H14 9YA",
+            "address" => "FLAT 2-2, BUILDING 1, 23 COLET PARK, HUMMING CITY, H14 9YA",
             "postcode" => postcode,
           },
           {
             "uprn" => "1000000002",
             "parent_uprn" => "",
-            "full_address" => "FLAT 1, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
+            "address" => "FLAT 1, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
             "postcode" => postcode,
           },
           {
             "uprn" => "1000000003",
             "parent_uprn" => "",
-            "full_address" => "FLAT 2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
+            "address" => "FLAT 2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
             "postcode" => postcode,
           },
         ]
@@ -222,7 +222,7 @@ describe UseCase::MatchAddress do
           {
             "uprn" => "2000000001",
             "parent_uprn" => "",
-            "full_address" => "2 BUILDING THIRD, 23 COLET PARK, HUMMING CITY, H14 9YA",
+            "address" => "2 BUILDING THIRD, 23 COLET PARK, HUMMING CITY, H14 9YA",
             "postcode" => postcode,
           },
         ]
@@ -233,7 +233,7 @@ describe UseCase::MatchAddress do
           {
             "uprn" => "1000000003",
             "parent_uprn" => "",
-            "full_address" => "FLAT 2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
+            "address" => "FLAT 2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
             "postcode" => postcode,
             "clean_address" => "FLAT 2 BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
             "building_tokens" => 3,
@@ -286,7 +286,7 @@ describe UseCase::MatchAddress do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "2000000001",
-            "full_address" => "FLAT 1, BUILDING 3, 23 COLET PARK, HUMMING CITY, H14 9YA",
+            "address" => "FLAT 1, BUILDING 3, 23 COLET PARK, HUMMING CITY, H14 9YA",
             "postcode" => postcode,
           },
         ]
@@ -297,7 +297,7 @@ describe UseCase::MatchAddress do
           {
             "uprn" => "2000000001",
             "parent_uprn" => "",
-            "full_address" => "FLAT 2, BUILDING 3, 23 COLET PARK, HUMMING CITY, H14 9YA",
+            "address" => "FLAT 2, BUILDING 3, 23 COLET PARK, HUMMING CITY, H14 9YA",
             "postcode" => postcode,
           },
         ]
@@ -308,7 +308,7 @@ describe UseCase::MatchAddress do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "2000000001",
-            "full_address" => "FLAT 1, BUILDING 3, 23 COLET PARK, HUMMING CITY, H14 9YA",
+            "address" => "FLAT 1, BUILDING 3, 23 COLET PARK, HUMMING CITY, H14 9YA",
             "postcode" => postcode,
             "clean_address" => "FLAT 1 BUILDING 3 23 COLET PARK HUMMING CITY H14 9YA",
             "building_tokens" => 3,

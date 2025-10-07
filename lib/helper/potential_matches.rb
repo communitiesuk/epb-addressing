@@ -2,15 +2,15 @@ module Helper
   class PotentialMatches
     def self.merge_parents(potential_matches:, parents:)
       # Combine parents on potential_matches when they include a new full address
-      potential_matches_addresses = potential_matches.map { |potential_match| potential_match["full_address"] }
-      filtered_parents = parents.map { |parent| potential_matches_addresses.include?(parent["full_address"]) ? nil : parent.merge({ "is_parent" => 1 }) }.compact
+      potential_matches_addresses = potential_matches.map { |potential_match| potential_match["address"] }
+      filtered_parents = parents.map { |parent| potential_matches_addresses.include?(parent["address"]) ? nil : parent.merge({ "is_parent" => 1 }) }.compact
       potential_matches.concat(filtered_parents)
     end
 
     # this is setting clean address 2
     def self.add_clean_address(potential_matches:)
       potential_matches.each do |potential_match|
-        potential_match["clean_address"] = Helper::Address.clean_address_string(potential_match["full_address"])
+        potential_match["clean_address"] = Helper::Address.clean_address_string(potential_match["address"])
       end
     end
 

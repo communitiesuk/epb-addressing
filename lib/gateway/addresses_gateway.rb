@@ -2,7 +2,7 @@ module Gateway
   class AddressesGateway
     def search_by_building_number_and_postcode(building_numbers:, postcode:)
       insert_sql = <<-SQL
-        SELECT fulladdress as full_address,
+        SELECT fulladdress as address,
                postcode,
                uprn,
                parentuprn as parent_uprn
@@ -29,7 +29,7 @@ module Gateway
 
     def search_by_postcode(postcode:)
       insert_sql = <<-SQL
-        SELECT fulladdress as full_address,
+        SELECT fulladdress as address,
                postcode,
                uprn,
                parentuprn as parent_uprn
@@ -50,7 +50,7 @@ module Gateway
 
     def search_by_uprns(uprns:)
       insert_sql = <<-SQL
-        SELECT fulladdress as full_address,
+        SELECT fulladdress as address,
                postcode,
                uprn,
                parentuprn as parent_uprn

@@ -21,7 +21,7 @@ describe Gateway::AddressesGateway do
       building_numbers = "29"
       postcode = "EX1 2FW"
       result = gateway.search_by_building_number_and_postcode(building_numbers:, postcode:)
-      expect(result.first.keys.sort).to eq %w[full_address parent_uprn postcode uprn]
+      expect(result.first.keys.sort).to eq %w[address parent_uprn postcode uprn]
     end
 
     it "returns more than one match that contain the building number and postcode" do
@@ -63,7 +63,7 @@ describe Gateway::AddressesGateway do
     it "returns the correct values" do
       postcode = "EX1 2FW"
       result = gateway.search_by_postcode(postcode:)
-      expect(result.first.keys.sort).to eq %w[full_address parent_uprn postcode uprn]
+      expect(result.first.keys.sort).to eq %w[address parent_uprn postcode uprn]
     end
 
     it "returns 0 when there are no matches that contain the postcode" do
@@ -83,7 +83,7 @@ describe Gateway::AddressesGateway do
     end
 
     it "returns the correct values" do
-      expect(result.first.keys.sort).to eq %w[full_address parent_uprn postcode uprn]
+      expect(result.first.keys.sort).to eq %w[address parent_uprn postcode uprn]
     end
 
     it "does not return any values for a missing uprn" do

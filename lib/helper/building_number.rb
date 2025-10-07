@@ -1,8 +1,8 @@
 module Helper
   class BuildingNumber
-    def self.extract_building_numbers(full_address)
+    def self.extract_building_numbers(address)
       # Prepare the input address, this may come "clean" in the future.
-      clean_address = Helper::Address.clean_address_string(full_address)
+      clean_address = Helper::Address.clean_address_string(address)
 
       # The regex pattern `\b(\d+[A-Z]?)\b` is used to find all building numbers.
       # - `\b`: A word boundary. This ensures that we match whole numbers, not parts of a larger number.

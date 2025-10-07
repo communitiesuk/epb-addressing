@@ -8,7 +8,7 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "2000000002",
-            "full_address" => "Some address with parent",
+            "address" => "Some address with parent",
             "postcode" => "IP25 6RE",
           },
         ]
@@ -19,7 +19,7 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "2000000002",
             "parent_uprn" => "",
-            "full_address" => "Different address on the parent",
+            "address" => "Different address on the parent",
             "postcode" => "IP25 6RE",
           },
         ]
@@ -30,13 +30,13 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "2000000002",
-            "full_address" => "Some address with parent",
+            "address" => "Some address with parent",
             "postcode" => "IP25 6RE",
           },
           {
             "uprn" => "2000000002",
             "parent_uprn" => "",
-            "full_address" => "Different address on the parent",
+            "address" => "Different address on the parent",
             "postcode" => "IP25 6RE",
             "is_parent" => 1,
           },
@@ -54,7 +54,7 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "1000000002",
-            "full_address" => "Same address parent and child",
+            "address" => "Same address parent and child",
             "postcode" => "IP25 6RE",
           },
         ]
@@ -65,7 +65,7 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000002",
             "parent_uprn" => "",
-            "full_address" => "Same address parent and child",
+            "address" => "Same address parent and child",
             "postcode" => "IP25 6RE",
           },
         ]
@@ -75,7 +75,7 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "1000000002",
-            "full_address" => "Same address parent and child",
+            "address" => "Same address parent and child",
             "postcode" => "IP25 6RE",
           },
         ]
@@ -93,13 +93,13 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "1000000002",
-          "full_address" => "123 Test Street, Greater Manchester",
+          "address" => "123 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
         },
         {
           "uprn" => "1000000002",
           "parent_uprn" => "",
-          "full_address" => "123 Secondary Rd",
+          "address" => "123 Secondary Rd",
           "postcode" => "IP25 6RE",
         },
       ]
@@ -110,14 +110,14 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "1000000002",
-          "full_address" => "123 Test Street, Greater Manchester",
+          "address" => "123 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 TEST STREET",
         },
         {
           "uprn" => "1000000002",
           "parent_uprn" => "",
-          "full_address" => "123 Secondary Rd",
+          "address" => "123 Secondary Rd",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 SECONDARY ROAD",
         },
@@ -135,14 +135,14 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "1000000002",
-          "full_address" => "123 Test Street, Greater Manchester",
+          "address" => "123 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 TEST STREET",
         },
         {
           "uprn" => "1000000002",
           "parent_uprn" => "",
-          "full_address" => "123 Secondary Rd",
+          "address" => "123 Secondary Rd",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 SECONDARY ROAD",
         },
@@ -154,7 +154,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "1000000002",
-          "full_address" => "123 Test Street, Greater Manchester",
+          "address" => "123 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 TEST STREET",
           "tokens_out" => 3,
@@ -162,7 +162,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000002",
           "parent_uprn" => "",
-          "full_address" => "123 Secondary Rd",
+          "address" => "123 Secondary Rd",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 SECONDARY ROAD",
           "tokens_out" => 3,
@@ -181,14 +181,14 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "1000000002",
-          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "address" => "123 Flat 2, Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 FLAT 2 TEST STREET",
         },
         {
           "uprn" => "1000000002",
           "parent_uprn" => "",
-          "full_address" => "123 Secondary Rd",
+          "address" => "123 Secondary Rd",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 SECONDARY ROAD",
         },
@@ -200,7 +200,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "1000000002",
-          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "address" => "123 Flat 2, Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 FLAT 2 TEST STREET",
           "building_tokens" => 2,
@@ -208,7 +208,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000002",
           "parent_uprn" => "",
-          "full_address" => "123 Secondary Rd",
+          "address" => "123 Secondary Rd",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 SECONDARY ROAD",
           "building_tokens" => 1,
@@ -229,14 +229,14 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "1000000002",
-          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "address" => "123 Flat 2, Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 FLAT 2 TEST STREET",
         },
         {
           "uprn" => "1000000002",
           "parent_uprn" => "",
-          "full_address" => "123 Secondary Rd",
+          "address" => "123 Secondary Rd",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 SECONDARY ROAD",
         },
@@ -248,7 +248,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "1000000002",
-          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "address" => "123 Flat 2, Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 FLAT 2 TEST STREET",
           "count_building_num_intersect" => 1,
@@ -256,7 +256,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000002",
           "parent_uprn" => "",
-          "full_address" => "123 Secondary Rd",
+          "address" => "123 Secondary Rd",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 SECONDARY ROAD",
           "count_building_num_intersect" => 0,
@@ -277,21 +277,21 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "1000000002",
-          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "address" => "123 Flat 2, Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 FLAT 2 TEST STREET",
         },
         {
           "uprn" => "1000000002",
           "parent_uprn" => "",
-          "full_address" => "123 Test Street, Greater Manchester",
+          "address" => "123 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 TEST STREET",
         },
         {
           "uprn" => "1000000003",
           "parent_uprn" => "",
-          "full_address" => "124 Test Street, Greater Manchester",
+          "address" => "124 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "124 TEST STREET",
         },
@@ -302,7 +302,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "1000000002",
-          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "address" => "123 Flat 2, Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 FLAT 2 TEST STREET",
           "count_tokens_intersect" => 5,
@@ -310,7 +310,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000002",
           "parent_uprn" => "",
-          "full_address" => "123 Test Street, Greater Manchester",
+          "address" => "123 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 TEST STREET",
           "count_tokens_intersect" => 3,
@@ -318,7 +318,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000003",
           "parent_uprn" => "",
-          "full_address" => "124 Test Street, Greater Manchester",
+          "address" => "124 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "124 TEST STREET",
           "count_tokens_intersect" => 2,
@@ -341,7 +341,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000001",
               "parent_uprn" => "1000000002",
-              "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+              "address" => "123 Flat 2, Test Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "123 FLAT 2 TEST STREET",
               "count_tokens_intersect" => 5,
@@ -349,7 +349,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000002",
               "parent_uprn" => "",
-              "full_address" => "123 Test Street, Greater Manchester",
+              "address" => "123 Test Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "123 TEST STREET",
               "count_tokens_intersect" => 3,
@@ -357,7 +357,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000003",
               "parent_uprn" => "",
-              "full_address" => "124 Test Street, Greater Manchester",
+              "address" => "124 Test Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "124 TEST STREET",
               "count_tokens_intersect" => 2,
@@ -369,7 +369,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000001",
               "parent_uprn" => "1000000002",
-              "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+              "address" => "123 Flat 2, Test Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "123 FLAT 2 TEST STREET",
               "count_tokens_intersect" => 5,
@@ -388,7 +388,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000001",
               "parent_uprn" => "1000000002",
-              "full_address" => "1, Test Street, Greater Manchester",
+              "address" => "1, Test Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "1 TEST STREET",
               "count_tokens_intersect" => 2,
@@ -396,7 +396,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000002",
               "parent_uprn" => "",
-              "full_address" => "2 Test Street, Greater Manchester",
+              "address" => "2 Test Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "2 TEST STREET",
               "count_tokens_intersect" => 2,
@@ -404,7 +404,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000003",
               "parent_uprn" => "",
-              "full_address" => "3 Test Street, Greater Manchester",
+              "address" => "3 Test Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "3 TEST STREET",
               "count_tokens_intersect" => 2,
@@ -412,7 +412,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000004",
               "parent_uprn" => "",
-              "full_address" => "3 Tst Street, Greater Manchester",
+              "address" => "3 Tst Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "3 TST STREET",
               "count_tokens_intersect" => 1,
@@ -425,7 +425,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000001",
               "parent_uprn" => "1000000002",
-              "full_address" => "1, Test Street, Greater Manchester",
+              "address" => "1, Test Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "1 TEST STREET",
               "count_tokens_intersect" => 2,
@@ -433,7 +433,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000002",
               "parent_uprn" => "",
-              "full_address" => "2 Test Street, Greater Manchester",
+              "address" => "2 Test Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "2 TEST STREET",
               "count_tokens_intersect" => 2,
@@ -441,7 +441,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000003",
               "parent_uprn" => "",
-              "full_address" => "3 Test Street, Greater Manchester",
+              "address" => "3 Test Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "3 TEST STREET",
               "count_tokens_intersect" => 2,
@@ -460,7 +460,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000001",
               "parent_uprn" => "1000000002",
-              "full_address" => "1, Test Street, Greater Manchester",
+              "address" => "1, Test Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "1 TEST STREET",
               "count_tokens_intersect" => 0,
@@ -468,7 +468,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000002",
               "parent_uprn" => "",
-              "full_address" => "2 Test Street, Greater Manchester",
+              "address" => "2 Test Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "2 TEST STREET",
               "count_tokens_intersect" => 0,
@@ -476,7 +476,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000003",
               "parent_uprn" => "",
-              "full_address" => "3 Test Street, Greater Manchester",
+              "address" => "3 Test Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "3 TEST STREET",
               "count_tokens_intersect" => 0,
@@ -499,7 +499,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000001",
               "parent_uprn" => "1000000002",
-              "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+              "address" => "123 Flat 2, Test Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "123 FLAT 2 TEST STREET",
               "count_tokens_matches_1" => 5,
@@ -507,7 +507,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000002",
               "parent_uprn" => "",
-              "full_address" => "123 Test Street, Greater Manchester",
+              "address" => "123 Test Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "123 TEST STREET",
               "count_tokens_matches_1" => 3,
@@ -515,7 +515,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000003",
               "parent_uprn" => "",
-              "full_address" => "124 Test Street, Greater Manchester",
+              "address" => "124 Test Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "124 TEST STREET",
               "count_tokens_matches_1" => 2,
@@ -527,7 +527,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000001",
               "parent_uprn" => "1000000002",
-              "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+              "address" => "123 Flat 2, Test Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "123 FLAT 2 TEST STREET",
               "count_tokens_matches_1" => 5,
@@ -550,7 +550,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000002",
               "parent_uprn" => "",
-              "full_address" => "2 Test Street, Greater Manchester",
+              "address" => "2 Test Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "2 TEST STREET",
               "percentage_match" => 0.8181818181818182,
@@ -558,7 +558,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000001",
               "parent_uprn" => "1000000002",
-              "full_address" => "1, Test Street, Greater Manchester",
+              "address" => "1, Test Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "1 TEST STREET",
               "percentage_match" => 0.9090909090909091,
@@ -566,7 +566,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000003",
               "parent_uprn" => "",
-              "full_address" => "3 Test Street, Greater Manchester",
+              "address" => "3 Test Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "3 TEST STREET",
               "percentage_match" => 0.9,
@@ -579,7 +579,7 @@ describe Helper::PotentialMatches, type: :helper do
             {
               "uprn" => "1000000001",
               "parent_uprn" => "1000000002",
-              "full_address" => "1, Test Street, Greater Manchester",
+              "address" => "1, Test Street, Greater Manchester",
               "postcode" => "IP25 6RE",
               "clean_address" => "1 TEST STREET",
               "percentage_match" => 0.9090909090909091,
@@ -604,7 +604,7 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "1000000002",
-            "full_address" => "Flat 1, 2, Test Street, Greater Manchester",
+            "address" => "Flat 1, 2, Test Street, Greater Manchester",
             "postcode" => "IP25 6RE",
             "clean_address" => "FLAT 1 2 TEST STREET",
             "count_tokens_intersect" => 5,
@@ -612,7 +612,7 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000002",
             "parent_uprn" => "",
-            "full_address" => "FLAT 1-2 Test Street, Greater Manchester",
+            "address" => "FLAT 1-2 Test Street, Greater Manchester",
             "postcode" => "IP25 6RE",
             "clean_address" => "FLAT 1 2 TEST STREET",
             "count_tokens_intersect" => 5,
@@ -621,7 +621,7 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000003",
             "parent_uprn" => "",
-            "full_address" => "FLAT 2 1 Test Street, Greater Manchester",
+            "address" => "FLAT 2 1 Test Street, Greater Manchester",
             "postcode" => "IP25 6RE",
             "clean_address" => "FLAT 2 1 TEST STREET",
             "count_tokens_intersect" => 5,
@@ -641,7 +641,7 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "1000000002",
-            "full_address" => "Flat 1, 2, Test Street, Greater Manchester",
+            "address" => "Flat 1, 2, Test Street, Greater Manchester",
             "postcode" => "IP25 6RE",
             "clean_address" => "FLAT 1 2 TEST STREET",
             "count_tokens_intersect" => 5,
@@ -649,7 +649,7 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000002",
             "parent_uprn" => "",
-            "full_address" => "FLAT 1-2 Test Street, Greater Manchester",
+            "address" => "FLAT 1-2 Test Street, Greater Manchester",
             "postcode" => "IP25 6RE",
             "clean_address" => "FLAT 1 2 TEST STREET",
             "count_tokens_intersect" => 5,
@@ -658,7 +658,7 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000003",
             "parent_uprn" => "",
-            "full_address" => "FLAT 2 1 Test Street, Greater Manchester",
+            "address" => "FLAT 2 1 Test Street, Greater Manchester",
             "postcode" => "IP25 6RE",
             "clean_address" => "FLAT 2 1 TEST STREET",
             "count_tokens_intersect" => 5,
@@ -680,7 +680,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "1000000002",
-          "full_address" => "Flat 1, 2, Test Street, Greater Manchester",
+          "address" => "Flat 1, 2, Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "FLAT 1 2 TEST STREET",
           "count_tokens_intersect" => 5,
@@ -688,7 +688,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000003",
           "parent_uprn" => "",
-          "full_address" => "FLAT 2 1 Test Street, Greater Manchester",
+          "address" => "FLAT 2 1 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "FLAT 2 1 TEST STREET",
           "count_tokens_intersect" => 5,
@@ -701,7 +701,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "1000000002",
-          "full_address" => "Flat 1, 2, Test Street, Greater Manchester",
+          "address" => "Flat 1, 2, Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "FLAT 1 2 TEST STREET",
           "count_tokens_intersect" => 5,
@@ -721,7 +721,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "1000000002",
-          "full_address" => "Flat 1, 2, Test Street, Greater Manchester",
+          "address" => "Flat 1, 2, Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "FLAT 1 2 TEST STREET",
           "count_tokens_intersect" => 5,
@@ -729,7 +729,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000002",
           "parent_uprn" => "",
-          "full_address" => "FLAT 1-2 Test Street, Greater Manchester",
+          "address" => "FLAT 1-2 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "FLAT 1 2 TEST STREET",
           "count_tokens_intersect" => 5,
@@ -742,7 +742,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "1000000002",
-          "full_address" => "Flat 1, 2, Test Street, Greater Manchester",
+          "address" => "Flat 1, 2, Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "FLAT 1 2 TEST STREET",
           "count_tokens_intersect" => 5,
@@ -763,21 +763,21 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "1000000002",
-          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "address" => "123 Flat 2, Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 FLAT 2 TEST STREET",
         },
         {
           "uprn" => "1000000002",
           "parent_uprn" => "",
-          "full_address" => "123 Test Street, Greater Manchester",
+          "address" => "123 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 TEST STREET",
         },
         {
           "uprn" => "1000000003",
           "parent_uprn" => "",
-          "full_address" => "124 Test Street, Greater Manchester",
+          "address" => "124 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "124 TEST STREET",
         },
@@ -788,7 +788,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "1000000002",
-          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "address" => "123 Flat 2, Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 FLAT 2 TEST STREET",
           "count_tokens_matches_1" => 5,
@@ -796,7 +796,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000002",
           "parent_uprn" => "",
-          "full_address" => "123 Test Street, Greater Manchester",
+          "address" => "123 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 TEST STREET",
           "count_tokens_matches_1" => 3,
@@ -804,7 +804,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000003",
           "parent_uprn" => "",
-          "full_address" => "124 Test Street, Greater Manchester",
+          "address" => "124 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "124 TEST STREET",
           "count_tokens_matches_1" => 2,
@@ -825,21 +825,21 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "1000000002",
-          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "address" => "123 Flat 2, Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 FLAT 2 TEST STREET",
         },
         {
           "uprn" => "1000000002",
           "parent_uprn" => "",
-          "full_address" => "123 Test Street, Greater Manchester",
+          "address" => "123 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 TEST STREET",
         },
         {
           "uprn" => "1000000003",
           "parent_uprn" => "",
-          "full_address" => "124 Test Street, Greater Manchester",
+          "address" => "124 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "124 TEST STREET",
         },
@@ -850,7 +850,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "1000000002",
-          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "address" => "123 Flat 2, Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 FLAT 2 TEST STREET",
           "count_tokens_matches_2" => 5,
@@ -858,7 +858,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000002",
           "parent_uprn" => "",
-          "full_address" => "123 Test Street, Greater Manchester",
+          "address" => "123 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 TEST STREET",
           "count_tokens_matches_2" => 3,
@@ -866,7 +866,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000003",
           "parent_uprn" => "",
-          "full_address" => "124 Test Street, Greater Manchester",
+          "address" => "124 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "124 TEST STREET",
           "count_tokens_matches_2" => 2,
@@ -885,7 +885,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "1000000002",
-          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "address" => "123 Flat 2, Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 FLAT 2 TEST STREET",
           "tokens_out" => 5,
@@ -894,7 +894,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000002",
           "parent_uprn" => "",
-          "full_address" => "123 Test Street, Greater Manchester",
+          "address" => "123 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 TEST STREET",
           "tokens_out" => 3,
@@ -903,7 +903,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000003",
           "parent_uprn" => "",
-          "full_address" => "124 Test Street, Greater Manchester",
+          "address" => "124 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "124 TEST STREET",
           "tokens_out" => 3,
@@ -916,7 +916,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "1000000002",
-          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "address" => "123 Flat 2, Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 FLAT 2 TEST STREET",
           "tokens_out" => 5,
@@ -926,7 +926,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000002",
           "parent_uprn" => "",
-          "full_address" => "123 Test Street, Greater Manchester",
+          "address" => "123 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "123 TEST STREET",
           "tokens_out" => 3,
@@ -936,7 +936,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000003",
           "parent_uprn" => "",
-          "full_address" => "124 Test Street, Greater Manchester",
+          "address" => "124 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "clean_address" => "124 TEST STREET",
           "tokens_out" => 3,
@@ -958,13 +958,13 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "2000000002",
-            "full_address" => "Some address with parent",
+            "address" => "Some address with parent",
             "postcode" => "IP25 6RE",
           },
           {
             "uprn" => "2000000002",
             "parent_uprn" => "",
-            "full_address" => "Different address on the parent",
+            "address" => "Different address on the parent",
             "postcode" => "IP25 6RE",
             "is_parent" => 1,
           },
@@ -975,7 +975,7 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "2000000002",
-            "full_address" => "Some address with parent",
+            "address" => "Some address with parent",
             "postcode" => "IP25 6RE",
           },
         ]
@@ -992,14 +992,14 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "2000000002",
-            "full_address" => "Some address with parent",
+            "address" => "Some address with parent",
             "postcode" => "IP25 6RE",
             "is_parent" => 1,
           },
           {
             "uprn" => "2000000002",
             "parent_uprn" => "",
-            "full_address" => "Different address on the parent",
+            "address" => "Different address on the parent",
             "postcode" => "IP25 6RE",
             "is_parent" => 1,
           },
@@ -1020,13 +1020,13 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "2000000002",
-            "full_address" => "Some address with parent",
+            "address" => "Some address with parent",
             "postcode" => "IP25 6RE",
           },
           {
             "uprn" => "2000000002",
             "parent_uprn" => "",
-            "full_address" => "Different address on the parent",
+            "address" => "Different address on the parent",
             "postcode" => "IP25 6RE",
           },
         ]
@@ -1048,7 +1048,7 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "",
-            "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+            "address" => "123 Flat 2, Test Street, Greater Manchester",
             "postcode" => "IP25 6RE",
             "clean_address" => "123 FLAT 2 TEST STREET",
             "tokens_out" => 5,
@@ -1057,7 +1057,7 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000002",
             "parent_uprn" => "",
-            "full_address" => "123 Test Street, Greater Manchester",
+            "address" => "123 Test Street, Greater Manchester",
             "postcode" => "IP25 6RE",
             "clean_address" => "123 TEST STREET",
             "tokens_out" => 3,
@@ -1070,7 +1070,7 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "",
-            "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+            "address" => "123 Flat 2, Test Street, Greater Manchester",
             "postcode" => "IP25 6RE",
             "clean_address" => "123 FLAT 2 TEST STREET",
             "tokens_out" => 5,
@@ -1080,7 +1080,7 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000002",
             "parent_uprn" => "",
-            "full_address" => "123 Test Street, Greater Manchester",
+            "address" => "123 Test Street, Greater Manchester",
             "postcode" => "IP25 6RE",
             "clean_address" => "123 TEST STREET",
             "tokens_out" => 3,
@@ -1102,7 +1102,7 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "",
-            "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+            "address" => "123 Flat 2, Test Street, Greater Manchester",
             "postcode" => "IP25 6RE",
             "clean_address" => "123 FLAT 2 TEST STREET",
             "tokens_out" => 5,
@@ -1111,7 +1111,7 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000002",
             "parent_uprn" => "",
-            "full_address" => "123 Test Street, Greater Manchester",
+            "address" => "123 Test Street, Greater Manchester",
             "postcode" => "IP25 6RE",
             "clean_address" => "123 TEST STREET",
             "tokens_out" => 3,
@@ -1126,7 +1126,7 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "",
-            "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+            "address" => "123 Flat 2, Test Street, Greater Manchester",
             "postcode" => "IP25 6RE",
             "clean_address" => "123 FLAT 2 TEST STREET",
             "tokens_out" => 5,
@@ -1135,7 +1135,7 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000002",
             "parent_uprn" => "",
-            "full_address" => "123 Test Street, Greater Manchester",
+            "address" => "123 Test Street, Greater Manchester",
             "postcode" => "IP25 6RE",
             "clean_address" => "123 TEST STREET",
             "tokens_out" => 3,
@@ -1159,7 +1159,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "2000000001",
-          "full_address" => "FLAT 1-2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
+          "address" => "FLAT 1-2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
           "postcode" => "H14 9YA",
           "clean_address" => "FLAT 1 2 BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
           "building_tokens" => 4,
@@ -1180,7 +1180,7 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "2000000001",
-          "full_address" => "FLAT 1-2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
+          "address" => "FLAT 1-2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
           "postcode" => "H14 9YA",
           "clean_address" => "FLAT 1 2 BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
           "building_tokens" => 4,
@@ -1219,14 +1219,14 @@ describe Helper::PotentialMatches, type: :helper do
         {
           "uprn" => "1000000001",
           "parent_uprn" => "",
-          "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+          "address" => "123 Flat 2, Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "confidence" => 99.120934,
         },
         {
           "uprn" => "1000000002",
           "parent_uprn" => "",
-          "full_address" => "123 Test Street, Greater Manchester",
+          "address" => "123 Test Street, Greater Manchester",
           "postcode" => "IP25 6RE",
           "confidence" => 48.044934,
         },
@@ -1239,7 +1239,7 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "",
-            "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+            "address" => "123 Flat 2, Test Street, Greater Manchester",
             "postcode" => "IP25 6RE",
             "confidence" => 99.120934,
           },
@@ -1259,14 +1259,14 @@ describe Helper::PotentialMatches, type: :helper do
           {
             "uprn" => "1000000001",
             "parent_uprn" => "",
-            "full_address" => "123 Flat 2, Test Street, Greater Manchester",
+            "address" => "123 Flat 2, Test Street, Greater Manchester",
             "postcode" => "IP25 6RE",
             "confidence" => 99.120934,
           },
           {
             "uprn" => "1000000002",
             "parent_uprn" => "",
-            "full_address" => "123 Test Street, Greater Manchester",
+            "address" => "123 Test Street, Greater Manchester",
             "postcode" => "IP25 6RE",
             "confidence" => 48.044934,
           },

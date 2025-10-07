@@ -7,7 +7,7 @@ describe UseCase::FindMatches do
     let(:building_numbers) { "29" }
     let(:postcode) { "EX1 2FW" }
     let(:result) do
-      [{ "full_address" => "FIFTH FLOOR FLAT 29, THE DEPOT, BAMPFYLDE STREET, EXETER, EX1 2FW", "postcode" => "EX1 2FW", "uprn" => "10094203877", "parent_uprn" => "10094201747" }]
+      [{ "address" => "FIFTH FLOOR FLAT 29, THE DEPOT, BAMPFYLDE STREET, EXETER, EX1 2FW", "postcode" => "EX1 2FW", "uprn" => "10094203877", "parent_uprn" => "10094201747" }]
     end
 
     before do
