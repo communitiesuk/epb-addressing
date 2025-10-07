@@ -3,6 +3,11 @@ require "epb-auth-tools"
 
 module Controller
   class BaseController < Sinatra::Base
+    def initialize(app = nil, **_kwargs)
+      super
+      @json_helper = Helper::JsonHelper.new
+    end
+
     set(:auth_token_has_all) do |*scopes|
       condition do
         token = Auth::Sinatra::Conditional.process_request env
@@ -15,6 +20,22 @@ module Controller
         content_type :json
         halt 401, { errors: [{ code: e }] }.to_json
       end
+    end
+
+    def request_body(schema)
+      @json_helper.convert_to_ruby_hash(request.body.read.to_s, schema:)
+    end
+
+    def json_response(object, code = 200)
+      content_type :json
+      status code
+      convert_to_json(object)
+    end
+
+    def convert_to_json(hash)
+      JSON.parse(hash.to_json).deep_transform_keys { |k|
+        k.camelize(:lower)
+      }.to_json
     end
 
     get "/", auth_token_has_all: %w[addressing:read] do
