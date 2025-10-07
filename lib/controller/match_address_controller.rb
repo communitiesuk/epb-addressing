@@ -30,7 +30,7 @@ module Controller
 
       match_address_use_case = Container.match_address_use_case
 
-      postcode = parsed_body[:postcode]
+      postcode = Helper::Postcode.validate(parsed_body[:postcode])
 
       address_array = [
         parsed_body[:address_line_1],
@@ -46,6 +46,8 @@ module Controller
       json_api_response code: 200, data: matches
     rescue Boundary::Json::ValidationError => e
       json_response({ error: e.message }, 400)
+    rescue Errors::PostcodeNotValid
+      json_response({ error: "Invalid postcode" }, 400)
     end
   end
 end
