@@ -66,19 +66,7 @@ describe UseCase::MatchAddress do
       [
         {
           "uprn" => "1000000001",
-          "parent_uprn" => "2000000001",
           "address" => "FLAT 1-2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
-          "postcode" => postcode,
-          "clean_address" => "FLAT 1 2 BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
-          "building_tokens" => 4,
-          "count_building_num_intersect" => 4,
-          "count_tokens_intersect" => 12,
-          "building_number_exact" => 1,
-          "count_tokens_matches_1" => 12,
-          "count_tokens_matches_2" => 12,
-          "tokens_out" => 12,
-          "percentage_match" => 1.0,
-          "is_exact_match" => 1,
           "confidence" => 99.88861160140938,
         },
       ]
@@ -116,7 +104,7 @@ describe UseCase::MatchAddress do
       it "calls add_confidence with the expected arguments" do
         use_case.execute(address:, postcode:, confidence_threshold:)
         expect(Helper::PotentialMatches).to have_received(:add_confidence).with(
-          potential_matches: expected_result,
+          potential_matches: anything,
           tokens_in: 12,
           building_number_found: 1,
           building_number_tokens: 4,
@@ -164,17 +152,7 @@ describe UseCase::MatchAddress do
         [
           {
             "uprn" => "1000000001",
-            "parent_uprn" => "",
             "address" => "FIVE FLAT TWO, THIRD BUILDING, COLET PARK, HUMMING CITY, H14 9YA",
-            "postcode" => postcode,
-            "clean_address" => "FIVE FLAT TWO THIRD BUILDING COLET PARK HUMMING CITY H14 9YA",
-            "building_tokens" => 0,
-            "count_building_num_intersect" => 0,
-            "count_tokens_intersect" => 11,
-            "count_tokens_matches_1" => 12,
-            "count_tokens_matches_2" => 11,
-            "tokens_out" => 11,
-            "percentage_match" => 1.0,
             "confidence" => 97.14892282138462,
           },
         ]
@@ -232,17 +210,7 @@ describe UseCase::MatchAddress do
         [
           {
             "uprn" => "1000000003",
-            "parent_uprn" => "",
             "address" => "FLAT 2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
-            "postcode" => postcode,
-            "clean_address" => "FLAT 2 BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
-            "building_tokens" => 3,
-            "count_building_num_intersect" => 1,
-            "count_tokens_intersect" => 9,
-            "count_tokens_matches_1" => 9,
-            "count_tokens_matches_2" => 10,
-            "tokens_out" => 11,
-            "percentage_match" => 0.9090909090909091,
             "confidence" => 43.54307280490437,
           },
         ]
@@ -260,7 +228,7 @@ describe UseCase::MatchAddress do
         allow(Helper::PotentialMatches).to receive(:add_confidence).and_call_original
         use_case.execute(address:, postcode:, confidence_threshold: 40)
         expect(Helper::PotentialMatches).to have_received(:add_confidence).with(
-          potential_matches: expected_result,
+          potential_matches: anything,
           tokens_in: 10,
           building_number_found: 1,
           building_number_tokens: 1,
@@ -307,17 +275,7 @@ describe UseCase::MatchAddress do
         [
           {
             "uprn" => "1000000001",
-            "parent_uprn" => "2000000001",
             "address" => "FLAT 1, BUILDING 3, 23 COLET PARK, HUMMING CITY, H14 9YA",
-            "postcode" => postcode,
-            "clean_address" => "FLAT 1 BUILDING 3 23 COLET PARK HUMMING CITY H14 9YA",
-            "building_tokens" => 3,
-            "count_building_num_intersect" => 3,
-            "count_tokens_intersect" => 11,
-            "count_tokens_matches_1" => 11,
-            "count_tokens_matches_2" => 11,
-            "tokens_out" => 11,
-            "percentage_match" => 1.0,
             "confidence" => 96.65794262938212,
           },
         ]

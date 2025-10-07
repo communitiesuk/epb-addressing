@@ -134,5 +134,9 @@ module Helper
       potential_matches.reject! { |potential_match| (potential_match["confidence"] < confidence_threshold) }
       potential_matches
     end
+
+    def self.remove_calculation_date(potential_matches:)
+      potential_matches.each { |match| match.slice!("uprn", "address", "confidence") }
+    end
   end
 end

@@ -1288,4 +1288,62 @@ describe Helper::PotentialMatches, type: :helper do
       end
     end
   end
+
+  describe "#remove_calculation_date" do
+    context "when there are extra keys that need to be removed" do
+      let(:potential_matches) do
+        [
+          {
+            "uprn" => "1000000001",
+            "parent_uprn" => "2000000001",
+            "address" => "FLAT 1, BUILDING 3, 23 COLET PARK, HUMMING CITY, H14 9YA",
+            "postcode" => "H14 9YA",
+            "clean_address" => "FLAT 1 BUILDING 3 23 COLET PARK HUMMING CITY H14 9YA",
+            "building_tokens" => 3,
+            "count_building_num_intersect" => 3,
+            "count_tokens_intersect" => 11,
+            "count_tokens_matches_1" => 11,
+            "count_tokens_matches_2" => 11,
+            "tokens_out" => 11,
+            "percentage_match" => 1.0,
+            "confidence" => 96.65794262938212,
+          },
+          {
+            "uprn" => "1000000002",
+            "parent_uprn" => "2000000001",
+            "address" => "FLAT 1, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
+            "postcode" => "H14 9YA",
+            "clean_address" => "FLAT 1 BUILDING 2 23 COLET PARK HUMMING CITY H14 9YA",
+            "building_tokens" => 3,
+            "count_building_num_intersect" => 3,
+            "count_tokens_intersect" => 11,
+            "count_tokens_matches_1" => 11,
+            "count_tokens_matches_2" => 11,
+            "tokens_out" => 11,
+            "percentage_match" => 1.0,
+            "confidence" => 96.65794262938212,
+          },
+        ]
+      end
+
+      let(:expected_result) do
+        [
+          {
+            "uprn" => "1000000001",
+            "address" => "FLAT 1, BUILDING 3, 23 COLET PARK, HUMMING CITY, H14 9YA",
+            "confidence" => 96.65794262938212,
+          },
+          {
+            "uprn" => "1000000002",
+            "address" => "FLAT 1, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
+            "confidence" => 96.65794262938212,
+          },
+        ]
+      end
+
+      it "only keeps the uprn, address and confidence" do
+        expect(potential_matches_helper.remove_calculation_date(potential_matches:)).to eq(expected_result)
+      end
+    end
+  end
 end

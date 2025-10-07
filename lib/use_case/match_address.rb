@@ -123,6 +123,9 @@ module UseCase
 
       # Remove the potential matches that don't meet the threshold
       Helper::PotentialMatches.remove_by_confidence(potential_matches:, confidence_threshold:)
+
+      # Prepare the response to remove unnecessary calculation data
+      Helper::PotentialMatches.remove_calculation_date(potential_matches:)
       potential_matches
     end
   end
