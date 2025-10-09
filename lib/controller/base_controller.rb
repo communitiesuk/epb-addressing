@@ -8,6 +8,10 @@ module Controller
       @json_helper = Helper::JsonHelper.new
     end
 
+    configure :development do
+      set :host_authorization, { permitted_hosts: %w[] }
+    end
+
     set(:auth_token_has_all) do |*scopes|
       condition do
         token = Auth::Sinatra::Conditional.process_request env
