@@ -49,6 +49,10 @@ module Gateway
     end
 
     def search_by_uprns(uprns:)
+      if uprns.empty?
+        return []
+      end
+
       insert_sql = <<-SQL
         SELECT fulladdress as address,
                postcode,

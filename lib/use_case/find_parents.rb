@@ -8,7 +8,7 @@ module UseCase
 
     def execute(uprns:)
       uprns.uniq!
-      @addresses_gateway.search_by_uprns(uprns:)
+      uprns.empty? ? [] : @addresses_gateway.search_by_uprns(uprns:)
     end
   end
 end

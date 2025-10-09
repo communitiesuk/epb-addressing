@@ -91,5 +91,14 @@ describe Gateway::AddressesGateway do
       result = gateway.search_by_uprns(uprns: missing_uprns)
       expect(result.length).to eq 0
     end
+
+    it "does not fail if passing an empty array of uprns" do
+      expect { gateway.search_by_uprns(uprns: []) }.not_to raise_error
+    end
+
+    it "does not return any values if passing an empty array of uprns" do
+      result = gateway.search_by_uprns(uprns: [])
+      expect(result.length).to eq 0
+    end
   end
 end
