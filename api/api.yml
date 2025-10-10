@@ -1,0 +1,96 @@
+openapi: 3.0.4
+info:
+  title: Energy Performance of Buildings Addressing API
+  version: 0.0.1
+  description: >
+    Matches a given address and postcode against a dataset and returns the
+    most likely matching addresses with UPRNs and confidence scores.
+  contact:
+    name: MHCLG Digital helpdesk (prefix email subject with "EPB")
+    email: mhclg.digital-services@communities.gov.uk
+
+tags:
+  - name: Address Matching
+    description: Endpoints to perform address matching
+paths:
+  /match-address:
+    post:
+      tags:
+        - Address Matching
+      summary: Match an address
+      description: >
+        Takes a postcode and address lines and town name, validates them, and
+        returns a list of potential matching addresses with UPRNs and confidence
+        scores.
+      operationId: matchAddress
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MatchAddressRequest"
+      responses:
+        "200":
+          description: Successfully matched one or more addresses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/MatchAddressResult"
+        "400":
+          description: Bad request (validation error or invalid postcode)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid postcode"
+
+components:
+  schemas:
+    MatchAddressRequest:
+      type: object
+      required:
+        - postcode
+        - address_line_1
+        - town
+      properties:
+        postcode:
+          type: string
+          example: "H14 9YA"
+        address_line_1:
+          type: string
+          example: "23 Colet Park"
+        address_line_2:
+          type: string
+          example: "Building 3"
+        address_line_3:
+          type: string
+        address_line_4:
+          type: string
+        town:
+          type: string
+          example: "Humming City"
+
+    MatchAddressResult:
+      type: object
+      properties:
+        uprn:
+          type: string
+          description: Unique Property Reference Number
+          example: "1000000001"
+        address:
+          type: string
+          description: Full matched address string
+          example: "FLAT 1, BUILDING 3, 23 COLET PARK, HUMMING CITY, H14 9YA"
+        confidence:
+          type: number
+          format: float
+          description: Confidence score for the match (0–100)
+          example: 96.65794262938212
