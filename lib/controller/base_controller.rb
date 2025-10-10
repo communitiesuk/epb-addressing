@@ -50,6 +50,10 @@ module Controller
       }.to_json
     end
 
+    def send_to_sentry(exception)
+      Sentry.capture_exception(exception) if defined?(Sentry)
+    end
+
     get "/", auth_token_has_all: %w[addressing:read] do
       status 200
     end

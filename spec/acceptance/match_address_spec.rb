@@ -1,3 +1,5 @@
+require "sentry-ruby"
+
 describe "Acceptance::MatchAddress" do
   include RSpecAddressingServiceMixin
   context "when getting a response from /match-address" do
@@ -88,9 +90,39 @@ describe "Acceptance::MatchAddress" do
         expect(response.status).to eq(400)
       end
 
-      it "Returns Invalid Postcode error message" do
+      it "returns Invalid Postcode error message" do
         response_body = JSON.parse(response.body)
         expect(response_body["error"]).to eq("Invalid postcode")
+      end
+    end
+
+    context "when there is an unexpected error" do
+      let(:response) do
+        post "/match-address",
+             { postcode: "SW1A 2AA",
+               address_line_1: "23 Fake Street",
+               address_line_2: "Building 1",
+               address_line_3: "Circular",
+               address_line_4: "Round",
+               town: "Fake Town" }.to_json,
+             {
+               "CONTENT_TYPE" => "application/json",
+             }
+      end
+
+      before do
+        allow(match_address_use_case).to receive(:execute).and_raise StandardError.new("Unexpected Error")
+        allow(Sentry).to receive(:capture_exception)
+      end
+
+      it "returns a 500 status" do
+        expect(response.status).to eq(500)
+      end
+
+      it "returns the error message and sends to Sentry" do
+        response_body = JSON.parse(response.body)
+        expect(response_body["error"]).to eq("Unexpected Error")
+        expect(Sentry).to have_received(:capture_exception).once
       end
     end
   end

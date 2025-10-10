@@ -48,6 +48,9 @@ module Controller
       json_response({ error: e.message }, 400)
     rescue Errors::PostcodeNotValid
       json_response({ error: "Invalid postcode" }, 400)
+    rescue StandardError => e
+      send_to_sentry(e)
+      json_response({ error: e.message }, 500)
     end
   end
 end
