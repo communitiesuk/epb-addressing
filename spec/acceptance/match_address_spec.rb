@@ -43,6 +43,28 @@ describe "Acceptance::MatchAddress" do
       end
     end
 
+    context "when requesting a response using a token with the wrong scopes" do
+      let(:response) do
+        header("Authorization", "Bearer #{get_valid_jwt(%w[bad:scope another:scope])}")
+        post "/match-address",
+             { postcode: "SW1A 2AA",
+               address_line_1: "23 Fake Street",
+               address_line_2: "Building 1",
+               town: "Fake Town" }.to_json,
+             {
+               "CONTENT_TYPE" => "application/json",
+             }
+      end
+
+      it "returns status 403" do
+        expect(response.status).to eq(403)
+      end
+
+      it "raises an error due to the missing token" do
+        expect(response.body).to include "You are not authorised to perform this request"
+      end
+    end
+
     context "when the request has a valid token" do
       before do
         header("Authorization", "Bearer #{get_valid_jwt(%w[addressing:read])}")
