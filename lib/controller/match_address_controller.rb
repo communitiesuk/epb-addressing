@@ -25,7 +25,7 @@ module Controller
       },
     }.freeze
 
-    post "/match-address" do
+    post "/match-address", auth_token_has_all: %w[addressing:read] do
       parsed_body = request_body(POST_SCHEMA)
 
       match_address_use_case = Container.match_address_use_case

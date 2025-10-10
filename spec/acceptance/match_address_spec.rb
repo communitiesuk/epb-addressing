@@ -22,7 +22,32 @@ describe "Acceptance::MatchAddress" do
       allow(match_address_use_case).to receive(:execute).and_return(match_address_response)
     end
 
-    context "when the response is a success" do
+    context "when requesting a response with no token" do
+      let(:response) do
+        post "/match-address",
+             { postcode: "SW1A 2AA",
+               address_line_1: "23 Fake Street",
+               address_line_2: "Building 1",
+               town: "Fake Town" }.to_json,
+             {
+               "CONTENT_TYPE" => "application/json",
+             }
+      end
+
+      it "returns status 401" do
+        expect(response.status).to eq(401)
+      end
+
+      it "raises an error due to the missing token" do
+        expect(response.body).to include Auth::Errors::TokenMissing.to_s
+      end
+    end
+
+    context "when the request has a valid token" do
+      before do
+        header("Authorization", "Bearer #{get_valid_jwt(%w[addressing:read])}")
+      end
+
       context "when the request has all the inputs" do
         let(:response) do
           post "/match-address",
@@ -48,81 +73,81 @@ describe "Acceptance::MatchAddress" do
           expect(response_body["data"]).to eq(match_address_response)
         end
       end
-    end
 
-    context "when the request is missing a required input" do
-      let(:response) do
-        post "/match-address",
-             { address_line_1: "23 Fake Street",
-               address_line_2: "Building 1",
-               address_line_3: "Circular",
-               address_line_4: "Round",
-               town: "Fake Town" }.to_json,
-             {
-               "CONTENT_TYPE" => "application/json",
-             }
+      context "when the request is missing a required input" do
+        let(:response) do
+          post "/match-address",
+               { address_line_1: "23 Fake Street",
+                 address_line_2: "Building 1",
+                 address_line_3: "Circular",
+                 address_line_4: "Round",
+                 town: "Fake Town" }.to_json,
+               {
+                 "CONTENT_TYPE" => "application/json",
+               }
+        end
+
+        it "returns a 400 status" do
+          expect(response.status).to eq(400)
+        end
+
+        it "explains that a postcode is missing" do
+          expect(response.body).to include("postcode")
+        end
       end
 
-      it "returns a 400 status" do
-        expect(response.status).to eq(400)
+      context "when the postcode is invalid" do
+        let(:response) do
+          post "/match-address",
+               { postcode: "S 2AA",
+                 address_line_1: "23 Fake Street",
+                 address_line_2: "Building 1",
+                 address_line_3: "Circular",
+                 address_line_4: "Round",
+                 town: "Fake Town" }.to_json,
+               {
+                 "CONTENT_TYPE" => "application/json",
+               }
+        end
+
+        it "returns a 400 status" do
+          expect(response.status).to eq(400)
+        end
+
+        it "returns Invalid Postcode error message" do
+          response_body = JSON.parse(response.body)
+          expect(response_body["error"]).to eq("Invalid postcode")
+        end
       end
 
-      it "explains that a postcode is missing" do
-        expect(response.body).to include("postcode")
-      end
-    end
+      context "when there is an unexpected error" do
+        let(:response) do
+          post "/match-address",
+               { postcode: "SW1A 2AA",
+                 address_line_1: "23 Fake Street",
+                 address_line_2: "Building 1",
+                 address_line_3: "Circular",
+                 address_line_4: "Round",
+                 town: "Fake Town" }.to_json,
+               {
+                 "CONTENT_TYPE" => "application/json",
+               }
+        end
 
-    context "when the postcode is invalid" do
-      let(:response) do
-        post "/match-address",
-             { postcode: "S 2AA",
-               address_line_1: "23 Fake Street",
-               address_line_2: "Building 1",
-               address_line_3: "Circular",
-               address_line_4: "Round",
-               town: "Fake Town" }.to_json,
-             {
-               "CONTENT_TYPE" => "application/json",
-             }
-      end
+        before do
+          allow(match_address_use_case).to receive(:execute).and_raise StandardError.new("Unexpected Error")
+          allow(Sentry).to receive(:capture_exception)
+        end
 
-      it "returns a 400 status" do
-        expect(response.status).to eq(400)
-      end
+        it "returns a 500 status" do
+          expect(response.status).to eq(500)
+        end
 
-      it "returns Invalid Postcode error message" do
-        response_body = JSON.parse(response.body)
-        expect(response_body["error"]).to eq("Invalid postcode")
-      end
-    end
-
-    context "when there is an unexpected error" do
-      let(:response) do
-        post "/match-address",
-             { postcode: "SW1A 2AA",
-               address_line_1: "23 Fake Street",
-               address_line_2: "Building 1",
-               address_line_3: "Circular",
-               address_line_4: "Round",
-               town: "Fake Town" }.to_json,
-             {
-               "CONTENT_TYPE" => "application/json",
-             }
-      end
-
-      before do
-        allow(match_address_use_case).to receive(:execute).and_raise StandardError.new("Unexpected Error")
-        allow(Sentry).to receive(:capture_exception)
-      end
-
-      it "returns a 500 status" do
-        expect(response.status).to eq(500)
-      end
-
-      it "returns the error message and sends to Sentry" do
-        response_body = JSON.parse(response.body)
-        expect(response_body["error"]).to eq("Unexpected Error")
-        expect(Sentry).to have_received(:capture_exception).once
+        it "returns the error message and sends to Sentry" do
+          response_body = JSON.parse(response.body)
+          expect(response_body["error"]).to eq("Unexpected Error")
+          expect(Sentry).to have_received(:capture_exception).once
+        end
       end
     end
   end
