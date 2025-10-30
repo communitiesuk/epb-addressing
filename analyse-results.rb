@@ -53,46 +53,46 @@ begin
       next # Skip all further checks for this row
 
     # --- Check 2: address_id starts with 'UPRN-' (The primary comparison group) ---
-    elsif address_id.start_with?('UPRN-')
+    else
 
       # Check 2a: Perfect match
-      if address_id.end_with?(uprn)
+      od_uprn = address_id.to_s[0...-2]
+
+      if od_uprn == uprn
         uprn_match_count += 1
 
       # Check 2b: Mismatch with a valid UPRN
       else
         # The uprn value is present and not 'none', but it doesn't match the address_id suffix
         valid_uprn_missing_count += 1
+        address_parts = [
+          row['address_line1'],
+          row['address_line2'],
+          row['address_line3'],
+          row['address_line4'],
+          row['town'],
+          row['postcode']
+        ].compact.reject(&:empty?).join(', ')
+
+        # Get the pre-existing address string from the 'address' column
+        address_column_value = row['address']
+        confidence = row['confidednce']
+
+        puts "=================================================="
+        puts "Address ID Format Mismatch (ID: #{od_uprn}) - Check Address Text:"
+        puts "Constructed Address (from individual lines):"
+        puts "\t#{od_uprn}\t#{address_parts}"
+        puts "Address Column Value (for comparison):"
+        puts "\t#{uprn}\t#{address_column_value}"
+        puts "Confidence level: #{confidence}"
+        puts "=================================================="
+        if options.pause_enabled && (valid_uprn_missing_count % 5 == 0)
+          puts "\n--- Press ENTER to continue to the next 5 address checks (Currently at: #{valid_uprn_missing_count}) ---"
+          STDIN.gets # STDIN.gets waits for user input (Enter key)
+        end
+
       end
 
-    # --- Check 3: Output Address for comparison (address_id doesn't start with UPRN-) ---
-    else
-      # Safely collect all address components for output
-      address_parts = [
-        row['address_line1'],
-        row['address_line2'],
-        row['address_line3'],
-        row['address_line4'],
-        row['town'],
-        row['postcode']
-      ].compact.reject(&:empty?).join(', ')
-
-      # Get the pre-existing address string from the 'address' column
-      address_column_value = row['address']
-
-      puts "=================================================="
-      puts "Address ID Format Mismatch (ID: #{address_id}) - Check Address Text:"
-      puts "Constructed Address (from individual lines):"
-      puts "\t#{address_parts}"
-      puts "Address Column Value (for comparison):"
-      puts "\t#{address_column_value}"
-      puts "=================================================="
-
-      addresses_matched_to_check += 1
-      if options.pause_enabled && (addresses_matched_to_check % 5 == 0)
-        puts "\n--- Press ENTER to continue to the next 5 address checks (Currently at: #{addresses_matched_to_check}) ---"
-        STDIN.gets # STDIN.gets waits for user input (Enter key)
-      end
     end
   end
 
