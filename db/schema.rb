@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_17_101624) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_05_144759) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -28,6 +28,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_17_101624) do
     t.string "fulladdress"
     t.string "country"
     t.string "classificationcode"
+    t.string "source"
     t.index ["postcode"], name: "index_addresses_on_postcode"
   end
 
