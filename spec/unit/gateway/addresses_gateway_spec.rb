@@ -6,7 +6,7 @@ describe Gateway::AddressesGateway do
   include_context "when accessing addresses table"
 
   before(:all) do
-    import_sample_data
+    import_sample_data "add_gb_builtaddress.csv"
   end
 
   describe "#search_by_building_number_and_postcode" do

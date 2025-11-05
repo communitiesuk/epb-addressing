@@ -1,10 +1,10 @@
 require "csv"
 
 shared_context "when accessing addresses table" do
-  def import_sample_data
+  def import_sample_data(sample_file_name)
     conn = ActiveRecord::Base.connection
 
-    file_path = File.join Dir.pwd, "spec/fixtures/samples/add_gb_builtaddress.csv"
+    file_path = File.join Dir.pwd, "spec/fixtures/samples", sample_file_name
 
     table_columns = ActiveRecord::Base.connection.columns("addresses").map(&:name)
 
