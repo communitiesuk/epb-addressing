@@ -1192,7 +1192,7 @@ describe Helper::PotentialMatches, type: :helper do
           "tokens_out" => 12,
           "percentage_match" => 1.0,
           "is_exact_match" => 1,
-          "confidence" => 99.30727799305609,
+          "confidence" => 99.30727799,
         },
       ]
     end

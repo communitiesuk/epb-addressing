@@ -107,9 +107,9 @@ module Helper
         z =
           -13.0343033 +
           4.56617636 * percent_num_1 +
-          5.69875062 * potential_match["count_tokens_matches_1"].to_f / tokens_in.to_f +
+          5.69875062 * (potential_match["count_tokens_matches_1"].to_f / tokens_in) +
           1.70818323 * bin_matches_stage_1 +
-          3.73172005 * potential_match["count_tokens_matches_2"].to_f / potential_match["tokens_out"].to_f +
+          3.73172005 * (potential_match["count_tokens_matches_2"].to_f / potential_match["tokens_out"]) +
           2.18266788 * building_number_found +
           2.08826112 * potential_match["is_exact_match"].to_f +
           0.46681653 * potential_match["count_tokens_intersect"] +
@@ -126,7 +126,7 @@ module Helper
         # divide by found_count (avoid divide by zero)
         confidence /= found_count.to_f
 
-        potential_match["confidence"] = confidence
+        potential_match["confidence"] = confidence.truncate(8)
       end
     end
 

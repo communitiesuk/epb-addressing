@@ -67,7 +67,7 @@ describe UseCase::MatchAddress do
         {
           "uprn" => "1000000001",
           "address" => "FLAT 1-2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
-          "confidence" => 99.88861160140938,
+          "confidence" => 99.88861160,
         },
       ]
     end
@@ -153,7 +153,7 @@ describe UseCase::MatchAddress do
           {
             "uprn" => "1000000001",
             "address" => "FIVE FLAT TWO, THIRD BUILDING, COLET PARK, HUMMING CITY, H14 9YA",
-            "confidence" => 97.14892282138462,
+            "confidence" => 97.14892282,
           },
         ]
       end
@@ -211,7 +211,7 @@ describe UseCase::MatchAddress do
           {
             "uprn" => "1000000003",
             "address" => "FLAT 2, BUILDING 2, 23 COLET PARK, HUMMING CITY, H14 9YA",
-            "confidence" => 43.54307280490437,
+            "confidence" => 43.54307280,
           },
         ]
       end
@@ -276,7 +276,7 @@ describe UseCase::MatchAddress do
           {
             "uprn" => "1000000001",
             "address" => "FLAT 1, BUILDING 3, 23 COLET PARK, HUMMING CITY, H14 9YA",
-            "confidence" => 96.65794262938212,
+            "confidence" => 96.65794262,
           },
         ]
       end
