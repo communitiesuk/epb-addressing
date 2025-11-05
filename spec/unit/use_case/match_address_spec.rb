@@ -276,7 +276,7 @@ describe UseCase::MatchAddress do
           {
             "uprn" => "1000000001",
             "address" => "FLAT 1, BUILDING 3, 23 COLET PARK, HUMMING CITY, H14 9YA",
-            "confidence" => 96.65794262,
+            "confidence" => 90.23001935,
           },
         ]
       end

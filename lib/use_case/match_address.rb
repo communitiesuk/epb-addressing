@@ -105,7 +105,7 @@ module UseCase
       unless building_numbers.empty?
         # SQL equivalent uses a non-deterministic way of picking the following value,
         # we do think @percentNum1 should be calculated per potential match.
-        potential_matches[0]["count_building_num_intersect"] / # eq. LenBuildingNumIntersect
+        percent_num_1 = potential_matches[0]["count_building_num_intersect"] / # eq. LenBuildingNumIntersect
           building_number_tokens.to_f
       end
 
