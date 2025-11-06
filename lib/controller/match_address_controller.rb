@@ -42,7 +42,7 @@ module Controller
 
       address = address_array.compact.join(", ")
 
-      matches = match_address_use_case.execute(address:, postcode:, confidence_threshold: 50)
+      matches = match_address_use_case.execute(address:, postcode:, confidence_threshold: 0)
       json_api_response code: 200, data: matches
     rescue Boundary::Json::ValidationError => e
       json_response({ error: e.message }, 400)

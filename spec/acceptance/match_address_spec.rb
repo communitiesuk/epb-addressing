@@ -91,7 +91,7 @@ describe "Acceptance::MatchAddress" do
         it "calls the MatchAddress use case and returns expected response" do
           response_body = JSON.parse(response.body)
 
-          expect(match_address_use_case).to have_received(:execute).with(address: "23 Fake Street, Building 1, Circular, Round, Fake Town", postcode: "SW1A 2AA", confidence_threshold: 50)
+          expect(match_address_use_case).to have_received(:execute).with(address: "23 Fake Street, Building 1, Circular, Round, Fake Town", postcode: "SW1A 2AA", confidence_threshold: 0)
           expect(response_body["data"]).to eq(match_address_response)
         end
       end
