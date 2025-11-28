@@ -31,3 +31,7 @@ drop-db:
 .PHONY: run
 run:
 	@STAGE=development bundle exec rackup -p 9191
+
+.PHONY: load_test_data
+load_test_data:
+	@bundle exec rake dev_scripts:load_sample_data_dev_tools
