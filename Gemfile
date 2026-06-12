@@ -4,7 +4,7 @@ source "https://rubygems.org"
 
 gem "activerecord", "~> 8.0.1"
 gem "csv", "~> 3.3"
-gem "epb-auth-tools", "~> 1.1.0"
+gem "epb-auth-tools", "~> 1.2.1"
 gem "json-schema", "~> 6.0"
 gem "pg", "~> 1.5"
 gem "puma", "~> 6.4"
