@@ -80,8 +80,8 @@ GEM
     parser (3.3.9.0)
       ast (~> 2.4.1)
       racc
-    pg (1.6.2)
     pg (1.6.2-arm64-darwin)
+    pg (1.6.2-x86_64-linux)
     prism (1.4.0)
     public_suffix (7.0.5)
     puma (7.2.1)
@@ -186,8 +186,8 @@ GEM
     zeitwerk (2.7.3)
 
 PLATFORMS
-  arm64-darwin-23
-  ruby
+  arm64-darwin-25
+  x86_64-linux-gnu
 
 DEPENDENCIES
   activerecord (~> 8.0.1)
