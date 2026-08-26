@@ -55,12 +55,12 @@ module Helper
 
     # We might not use this
     def self.remove_parents(potential_matches:)
-      potential_matches.reject! { |potential_match| (potential_match["is_parent"] == 1) }
+      potential_matches.reject! { |potential_match| potential_match["is_parent"] == 1 }
       potential_matches
     end
 
     def self.remove_non_exact_numbers(extracted_building_number:, potential_matches:)
-      potential_matches.select! { |potential_match| (Helper::BuildingNumber.extract_building_numbers(potential_match["clean_address"]) == extracted_building_number) }
+      potential_matches.select! { |potential_match| Helper::BuildingNumber.extract_building_numbers(potential_match["clean_address"]) == extracted_building_number }
       potential_matches.each do |potential_match|
         potential_match["building_number_exact"] = 1
       end
@@ -131,7 +131,7 @@ module Helper
     end
 
     def self.remove_by_confidence(potential_matches:, confidence_threshold:)
-      potential_matches.reject! { |potential_match| (potential_match["confidence"] < confidence_threshold) }
+      potential_matches.reject! { |potential_match| potential_match["confidence"] < confidence_threshold }
       potential_matches
     end
 

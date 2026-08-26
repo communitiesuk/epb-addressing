@@ -20,5 +20,5 @@ group :test do
   gem "rack-test", "~> 2.2.0"
   gem "rspec"
   gem "rubocop-govuk", "~> 5.0", require: false
-  gem "rubocop-performance", "~> 1.21", require: false
+  gem "rubocop-performance", "~> 1.26", require: false
 end
