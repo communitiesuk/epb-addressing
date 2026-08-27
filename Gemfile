@@ -2,7 +2,7 @@ ruby "3.4.9"
 
 source "https://rubygems.org"
 
-gem "activerecord", "~> 8.0.1"
+gem "activerecord", "~> 8.1.3"
 gem "csv", "~> 3.3"
 gem "epb-auth-tools", "~> 1.2.1"
 gem "json-schema", "~> 6.2"
