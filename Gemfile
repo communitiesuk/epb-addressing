@@ -13,7 +13,7 @@ gem "rake", "~> 13.4"
 gem "sentry-ruby", "~> 6.7"
 gem "sinatra"
 gem "sinatra-activerecord", "~> 2.0.28"
-gem "zeitwerk", "~> 2.7.2"
+gem "zeitwerk", "~> 2.8.3"
 
 group :test do
   gem "database_cleaner-active_record", "~> 2.1"

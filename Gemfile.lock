@@ -184,7 +184,7 @@ GEM
     unicode-emoji (4.2.0)
     uri (1.1.1)
     version_gem (1.1.11)
-    zeitwerk (2.7.3)
+    zeitwerk (2.8.3)
 
 PLATFORMS
   arm64-darwin-25
@@ -207,7 +207,7 @@ DEPENDENCIES
   sentry-ruby (~> 6.7)
   sinatra
   sinatra-activerecord (~> 2.0.28)
-  zeitwerk (~> 2.7.2)
+  zeitwerk (~> 2.8.3)
 
 RUBY VERSION
    ruby 3.4.9p82
