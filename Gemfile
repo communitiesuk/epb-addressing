@@ -17,7 +17,7 @@ gem "zeitwerk", "~> 2.8.3"
 
 group :test do
   gem "database_cleaner-active_record", "~> 2.1"
-  gem "rack-test", "~> 2.2.0"
+  gem "rack-test", "~> 2.3.0"
   gem "rspec"
   gem "rubocop-govuk", "~> 5.0", require: false
   gem "rubocop-performance", "~> 1.26", require: false
