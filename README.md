@@ -73,3 +73,7 @@ Issuer for the JWT encoded auth token.
 #### `JWT_SECRET`
 
 Secret for the JWT encoded auth token.
+
+#### `COVERAGE`
+
+If "true", a coverage report will be generated when the rspec tests are run.
