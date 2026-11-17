@@ -41,7 +41,7 @@ GEM
     epb-auth-tools (1.2.1)
       jwt (~> 3.2.0)
       oauth2 (>= 1.4, < 3.0)
-    faraday (2.15.0)
+    faraday (2.15.1)
       faraday-net_http (>= 2.0, < 3.6)
       json
       logger
