@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "sinatra/base"
 require "epb-auth-tools"
 
@@ -10,6 +12,7 @@ module Controller
 
     configure :development do
       set :host_authorization, { permitted_hosts: %w[] }
+      set :show_exceptions, false
     end
 
     set(:auth_token_has_all) do |*scopes|
@@ -25,6 +28,12 @@ module Controller
         halt 401, { errors: [{ code: e }] }.to_json
       end
     end
+
+    error do |exception|
+      json_response(error_details(exception), 500)
+    end
+
+  private
 
     def request_body(schema)
       @json_helper.convert_to_ruby_hash(request.body.read.to_s, schema:)
@@ -50,8 +59,13 @@ module Controller
       }.to_json
     end
 
-    def send_to_sentry(exception)
-      Sentry.capture_exception(exception) if defined?(Sentry)
+    def error_details(exception)
+      {
+        type: exception.class.name,
+        message: exception.message,
+        backtrace: exception&.backtrace&.select { it.start_with?(File.expand_path("..", __dir__)) },
+        cause: exception.cause && error_details(exception.cause),
+      }.compact
     end
   end
 end
