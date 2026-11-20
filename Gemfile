@@ -20,7 +20,7 @@ group :test do
   gem "debug"
   gem "rack-test", "~> 2.3.0"
   gem "rspec"
-  gem "rubocop-govuk", "~> 5.0", require: false
-  gem "rubocop-performance", "~> 1.26", require: false
+  gem "rubocop-govuk", "~> 6.0", require: false
+  gem "rubocop-performance", "~> 1.27", require: false
   gem "simplecov", "~>1.3.2"
 end
